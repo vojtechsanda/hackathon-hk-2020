@@ -100,8 +100,30 @@ $app->route(
       $sql .= ' WHERE ' . $sql_append;
     }
 
-    echo $sql;
-    print_r($params);
+    $orderby = $_GET['orderby'];
+    $direction = $_GET['dir'];
+    if (isset($orderby)) {
+      $orderby = strtolower($orderby);
+      if ($orderby == 'title' || $orderby == 'published_datetime') {
+        $sql .= ' ORDER BY ' . $orderby;
+        if (isset($direction)) {
+          $direction = strtolower($direction);
+          if ($direction == 'asc' || $direction == 'desc') {
+            $sql .= ' ' . $direction;
+          }
+        }
+      }
+    }
+
+    if (isset($_GET['limit'])) {
+      $params[':limit'] = intval($_GET['limit']);
+      $offset = $_GET['offset'];
+      if (!isset($offset)) {
+        $offset = 0;
+      }
+      $params[':offset'] = intval($offset);
+      $sql .= ' LIMIT :limit OFFSET :offset';
+    }
 
     $messages = $app->get('DB')->exec(
       $sql, $params
