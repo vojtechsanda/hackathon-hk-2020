@@ -60,7 +60,6 @@ class ResultsController {
     constructor(recordsObj) {
         this.state = {
             recordsObj: recordsObj,
-            results: new Results(),
         };
     }
     updateRecords(recordsObj) {
