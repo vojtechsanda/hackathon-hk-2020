@@ -23,22 +23,28 @@ class SearchController {
             search: new Search(records),
         };
     }
-
     render(categories, sources) {
         searchView.renderCategoriesSelectOptions(categories);
+        searchView.renderCategoriesSide(categories);
         searchView.renderSourcesSelectOptions(sources);
+        searchView.renderSourcesSide(sources);
     }
-
+    updateFilter(filterType, filterOptionId) {
+        searchView.updateFilter(filterType, filterOptionId);
+    }
     getSearchedRecords() {
         const searchedTxt = searchView.getSearchedTxt();
         const selectedCategory = searchView.getCategory();
         const selectedSource = searchView.getSource();
 
-        const searchedRecords = this.state.search.search(searchedTxt, selectedCategory, selectedSource);
+        const searchedRecords = this.state.search.search(
+            searchedTxt,
+            selectedCategory,
+            selectedSource
+        );
 
         return searchedRecords;
     }
-
     init(categories, sources) {
         this.render(categories, sources);
     }
@@ -55,12 +61,10 @@ class ResultsController {
             results: new Results
         }
     }
-
     updateRecords(records) {
         this.state.records = Array.from(records);
         this.render();
     }
-
     render() {
         const sorters = resultsView.getSorters();
         const sortedRecords = this.state.results.sortBy(this.state.records, sorters);
@@ -78,7 +82,6 @@ class Desk {
         this.state = {};
         this.controllers = {};
     }
-
     async fetchAllRecords() {
         let resp;
 
@@ -93,7 +96,6 @@ class Desk {
 
         return records;
     }
-
     async fetchAllCategories() {
         let resp;
 
@@ -108,7 +110,6 @@ class Desk {
 
         return categories;
     }
-
     async fetchAllSources() {
         let resp;
 
@@ -123,7 +124,6 @@ class Desk {
 
         return sources;
     }
-
     async getAllData() {
         const records = await this.fetchAllRecords();
         if (records === false) return;
@@ -158,8 +158,26 @@ class Desk {
                 this.controllers.results.render();
             });
         });
-    }
 
+        elements.searchCategorySide.addEventListener('click', e => {
+            const categoryOption = e.target.closest('[data-option-id]');
+            
+            if (categoryOption) {
+                const categoryId = categoryOption.dataset.optionId;
+                searchView.resetFilters();
+                searchView.updateFilter('category', categoryId);
+            }
+        })
+        elements.searchSourcesSide.addEventListener('click', e => {
+            const sourceOption = e.target.closest('[data-option-id]');
+
+            if (sourceOption) {
+                const sourceId = sourceOption.dataset.optionId;
+                searchView.resetFilters();
+                searchView.updateFilter('source', sourceId);
+            }
+        });
+    }
     initControllers() {
         this.controllers.search = new SearchController(this.state.records);
         this.controllers.search.init(this.state.categories, this.state.sources);
@@ -167,11 +185,10 @@ class Desk {
         this.controllers.results = new ResultsController(this.state.records);
         this.controllers.results.render();
     }
-
     async init() {
         const fetchedDataStatus = await this.getAllData();
         if (!fetchedDataStatus) {
-            //alert('Nějaký zdroj se nenačtl');
+            alert('Nějaký zdroj se nenačtl');
             return;
         }
 
