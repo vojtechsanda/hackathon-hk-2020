@@ -7,6 +7,7 @@ def get_datetime(date_str):
   time = datetime.datetime.strptime(date_str, '%d.%m.%Y')
   return time.strftime('%Y-%m-%d %H:%M:%S')
 
+#TODO FIXNOUT INDEXOVÁNÍ
 class PardubickyKraj:
   def __init__(self, db_session):
     self.db_session = db_session
@@ -79,7 +80,7 @@ class PardubickyKraj:
           source_obj.name = source
           self.db_session.add(source_obj)
           self.db_session.commit()
-          sources.append(source)
+          sources[source] = source_obj.id
         message_obj.source_id = sources.index(source) + 1
       i += 1
       attachment = attachment_pattern.match(data[i])
