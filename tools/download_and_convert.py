@@ -7,7 +7,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy_utils import create_database, database_exists
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, Float, String, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, ForeignKey, DateTime
+from datetime import datetime
 
 Base = declarative_base()
 
@@ -15,8 +16,12 @@ class Message(Base):
     __tablename__ = "message"
     id = Column(Integer, primary_key=True, unique=True)
     title = Column(String(255))
+    attachment_url = Column(String(255))
+    attachment_filename = Column(String(255))
     source_id = Column(Integer)#, ForeignKey('source.id')*/)
     domain_id = Column(Integer)
+    published_datetime = Column(DateTime)
+    expired_datetime = Column(DateTime)
 
 class Source(Base):
     __tablename__ = "source"
@@ -27,6 +32,12 @@ class Domain(Base):
     __tablename__ = "domain"
     id = Column(Integer, primary_key=True, unique=True)
     name = Column(String(255))
+
+def get_datetime(datetime_obj, prefix):
+    date = datetime_obj.find('wtd:date', prefix).text
+    time = datetime_obj.find('wtd:time', prefix).text
+    datetime_str = date + ' ' + time
+    return datetime_str
 
 def download_from_url(url, dst, req=None):
     if req is None:
@@ -66,7 +77,11 @@ def convert_data():
     domains = []
 
     for row in tqdm(iterable=news, total=len(news)):
+        message_obj = Message()
+
         title = row.find('wtd:title', prefix_map).text.strip()
+
+        # Source
         source = row.find('wtd:source', prefix_map)
         if (source != None):
             source = source.text.strip()
@@ -80,6 +95,7 @@ def convert_data():
         else:
             source_id = None
 
+        # Title
         domain = row.find('.//wtd:category[@name="Úřední deska"]/wtd:category', prefix_map)
         if (domain != None):
             domain = domain.attrib['name'].strip()
@@ -93,15 +109,36 @@ def convert_data():
         else:
             domain_id = None
 
-        message_obj = Message()
+        # Attachment
+        urlprefix = row.find('.//wtd:urlprefix', prefix_map).text;
+        assetsfolder = row.find('.//wtd:assetsfolder', prefix_map).text;
+        attachment = row.find('.//wtd:attachment', prefix_map)
+        print(len(row.findall('.//wtd:attachment', prefix_map)))
+
+        if (attachment != None):
+            filename = attachment.find('wtd:filename', prefix_map).text;
+            filepath = attachment.find('wtd:filepath', prefix_map).text;
+            message_obj.attachment_filename = filename
+            message_obj.attachment_url = urlprefix + '/' + assetsfolder + filepath + filename
+
+        # Datetimes
+        datetime_published = row.find('wtd:datepublished', prefix_map);
+        datetime_created = row.find('wtd:datenews', prefix_map);
+        datetime_expired = row.find('wtd:dateexpired', prefix_map);
+
+        if (datetime_published != None):
+            message_obj.published_datetime = get_datetime(datetime_published, prefix_map)
+        elif (datetime_created != None):
+            message_obj.published_datetime = get_datetime(datetime_created, prefix_map)
+
+        if (datetime_expired != None):
+            message_obj.expired_datetime = get_datetime(datetime_expired, prefix_map)
+
         message_obj.title = title
-        #TODO
         message_obj.source_id = source_id
         message_obj.domain_id = domain_id
         DBSession.add(message_obj)
     DBSession.commit()
-
-    print(sources)
 
 if __name__ == '__main__':
     #download_data()
