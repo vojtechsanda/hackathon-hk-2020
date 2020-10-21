@@ -1,0 +1,108 @@
+import requests
+import logging
+from tqdm import tqdm
+from lxml import etree
+from sqlalchemy import create_engine, MetaData, Table, select
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy_utils import create_database, database_exists
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, Float, String, ForeignKey
+
+Base = declarative_base()
+
+class Message(Base):
+    __tablename__ = "message"
+    id = Column(Integer, primary_key=True, unique=True)
+    title = Column(String(255))
+    source_id = Column(Integer)#, ForeignKey('source.id')*/)
+    domain_id = Column(Integer)
+
+class Source(Base):
+    __tablename__ = "source"
+    id = Column(Integer, primary_key=True, unique=True)
+    name = Column(String(255))
+
+class Domain(Base):
+    __tablename__ = "domain"
+    id = Column(Integer, primary_key=True, unique=True)
+    name = Column(String(255))
+
+def download_from_url(url, dst, req=None):
+    if req is None:
+        req = requests.get(url, stream=True)
+    file_size = int(req.headers['Content-Length'].strip())
+    pbar = tqdm(
+        total=file_size, initial=0,
+        unit='B', unit_scale=True, desc=url.split('/')[-1])
+    with(open(dst, 'wb')) as f:
+        for chunk in req.iter_content(chunk_size=1024):
+            if chunk:
+                f.write(chunk)
+                pbar.update(1024)
+    pbar.close()
+
+def download_data():
+    logging.info('Downloading data...')
+    download_from_url('http://www.kr-kralovehradecky.cz/xml/export/eldeska-zpravy.xml', 'data.xml')
+
+def convert_data():
+    url = 'mysql://root:@localhost/hackathon_hk_2020?charset=utf8'
+
+    if not database_exists(url):
+        create_database(url)
+
+    engine = create_engine(url, echo=False, encoding='utf-8')
+    DBSession = scoped_session(sessionmaker())
+    DBSession.configure(bind=engine, autoflush=False, expire_on_commit=False)
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
+
+    tree = etree.parse('data.xml')
+    prefix_map = {"wtd": "http://www.webtodate.cz/schemas/2.0/SimpleSchema"}
+    news = tree.findall('wtd:news', prefix_map)
+
+    sources = []
+    domains = []
+
+    for row in tqdm(iterable=news, total=len(news)):
+        title = row.find('wtd:title', prefix_map).text.strip()
+        source = row.find('wtd:source', prefix_map)
+        if (source != None):
+            source = source.text.strip()
+
+            if (source not in sources):
+                sources.append(source)
+                source_obj = Source()
+                source_obj.name = source
+                DBSession.add(source_obj)
+            source_id = sources.index(source) + 1
+        else:
+            source_id = None
+
+        domain = row.find('.//wtd:category[@name="Úřední deska"]/wtd:category', prefix_map)
+        if (domain != None):
+            domain = domain.attrib['name'].strip()
+
+            if (domain not in domains):
+                domains.append(domain)
+                domain_obj = Domain()
+                domain_obj.name = domain
+                DBSession.add(domain_obj);
+            domain_id = domains.index(domain) + 1
+        else:
+            domain_id = None
+
+        message_obj = Message()
+        message_obj.title = title
+        #TODO
+        message_obj.source_id = source_id
+        message_obj.domain_id = domain_id
+        DBSession.add(message_obj)
+    DBSession.commit()
+
+    print(sources)
+
+if __name__ == '__main__':
+    #download_data()
+    convert_data()
