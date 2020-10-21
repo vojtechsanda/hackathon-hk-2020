@@ -40,7 +40,9 @@ $app->route(
 
     foreach ($messages as $key=>$message) {
       $messages[$key]['instances'] = $app->GET('DB')->exec(
-        "SELECT * FROM instance WHERE message_id = :message_id",
+        "SELECT id, title, attachment_url, attachment_filename
+        FROM instance
+        WHERE message_id = :message_id",
         [':message_id' => $message['id']]
       );
     }
