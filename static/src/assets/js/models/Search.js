@@ -4,7 +4,7 @@ export default class Search {
             records: records,
         };
     }
-    search(searchedTxt, selectedCategory, selectedField) {
+    search(searchedTxt, selectedCategory, selectedSource) {
         let filteredRecords = Array.from(this.state.records);
 
         if (searchedTxt) {
@@ -13,8 +13,8 @@ export default class Search {
         if (selectedCategory) {
             filteredRecords = filteredRecords.filter(record => record.category === selectedCategory);
         }
-        if (selectedField) {
-            filteredRecords = filteredRecords.filter(record => record.field === selectedField);
+        if (selectedSource) {
+            filteredRecords = filteredRecords.filter(record => record.source === selectedSource);
         }
 
         return filteredRecords;
