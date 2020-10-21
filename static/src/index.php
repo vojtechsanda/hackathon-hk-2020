@@ -26,6 +26,8 @@ $app->route(
         message.title,
         message.attachment_url,
         message.attachment_filename,
+        message.source_id,
+        message.category_id,
         UNIX_TIMESTAMP(message.published_datetime) as published_datetime,
         UNIX_TIMESTAMP(message.expired_datetime) as expired_datetime,
         source.name as source,
