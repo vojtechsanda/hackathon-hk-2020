@@ -99,7 +99,7 @@ class Desk {
         let resp;
 
         try {
-            resp = await Axios('/api/categories/?region=' + currentRegion);');
+            resp = await Axios('/api/categories/?region=' + currentRegion);
         } catch {
             console.error('Nebylo možné kategorie data');
             return false;
