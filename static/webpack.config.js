@@ -29,6 +29,10 @@ module.exports = {
                 from: 'src/assets/imgs',
                 to: 'assets/imgs',
             },
+            {
+                from: 'src/api/api.json',
+                to: 'api/api.json',
+            },
         ]),
     ],
     module: {
