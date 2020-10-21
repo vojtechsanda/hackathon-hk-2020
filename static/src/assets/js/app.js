@@ -73,7 +73,7 @@ class Desk {
         let resp;
 
         try {
-            resp = await Axios('/api/api.json?records');
+            resp = await Axios('/api/all/');
         } catch {
             console.error('Nebylo možné načíst data');
             return false;
@@ -87,7 +87,7 @@ class Desk {
         let resp;
 
         try {
-            resp = await Axios('/api/api.json?categories');
+            resp = await Axios('/api/sources/');
         } catch {
             console.error('Nebylo možné kategorie data');
             return false;
@@ -101,7 +101,7 @@ class Desk {
         let resp;
 
         try {
-            resp = await Axios('/api/api.json?fields');
+            resp = await Axios('/api/categories/');
         } catch {
             console.error('Nebylo možné načíst oblasti');
             return false;
