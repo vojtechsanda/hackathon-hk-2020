@@ -20,16 +20,17 @@ $app->route(
 $app->route(
   'GET /api/all',
   function($app) {
-    $results = $app->get('DB')->exec(
+    $messages = $app->get('DB')->exec(
       "SELECT
         message.id,
         message.title,
-        message.attachment_url,
-        message.attachment_filename,
         message.source_id,
         message.category_id,
-        UNIX_TIMESTAMP(message.published_datetime) as published_datetime,
-        UNIX_TIMESTAMP(message.expired_datetime) as expired_datetime,
+        message.body,
+        1000 * UNIX_TIMESTAMP(message.published_datetime) as published_datetime,
+        1000 * UNIX_TIMESTAMP(message.expired_datetime) as expired_datetime,
+        DATE_FORMAT(message.published_datetime, '%e.%c.%Y') as published_datetime_txt,
+        DATE_FORMAT(message.expired_datetime, '%e.%c.%Y') as expired_datetime_txt,
         source.name as source,
         category.name as category
        FROM message
@@ -39,8 +40,17 @@ $app->route(
        ON category.id = message.category_id"
     );
 
+    foreach ($messages as $key=>$message) {
+      $messages[$key]['instances'] = $app->GET('DB')->exec(
+        "SELECT id, title, attachment_url, attachment_filename
+        FROM instance
+        WHERE message_id = :message_id",
+        [':message_id' => $message['id']]
+      );
+    }
+
     header('Content-type: application/json');
-    echo json_encode($results, JSON_NUMERIC_CHECK);
+    echo json_encode($messages, JSON_NUMERIC_CHECK);
   }
 );
 

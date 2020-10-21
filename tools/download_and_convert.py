@@ -7,21 +7,10 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy_utils import create_database, database_exists
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, Float, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, Float, String, ForeignKey, DateTime, Text
 from datetime import datetime
 
 Base = declarative_base()
-
-class Message(Base):
-    __tablename__ = "message"
-    id = Column(Integer, primary_key=True, unique=True)
-    title = Column(String(255))
-    attachment_url = Column(String(255))
-    attachment_filename = Column(String(255))
-    source_id = Column(Integer)#, ForeignKey('source.id')*/)
-    category_id = Column(Integer)
-    published_datetime = Column(DateTime)
-    expired_datetime = Column(DateTime)
 
 class Source(Base):
     __tablename__ = "source"
@@ -32,6 +21,26 @@ class Category(Base):
     __tablename__ = "category"
     id = Column(Integer, primary_key=True, unique=True)
     name = Column(String(255))
+
+class Message(Base):
+    __tablename__ = "message"
+    id = Column(Integer, primary_key=True, unique=True)
+    title = Column(String(255))
+    body = Column(Text)
+    source_id = Column(Integer, ForeignKey('source.id'))
+    category_id = Column(Integer, ForeignKey('category.id'))
+    published_datetime = Column(DateTime)
+    expired_datetime = Column(DateTime)
+    children = relationship('Instance')
+
+class Instance(Base):
+    __tablename__ = "instance"
+    id = Column(Integer, primary_key=True, unique=True)
+    message_id = Column(Integer, ForeignKey('message.id'))
+    title = Column(String(255))
+    attachment_url = Column(String(255))
+    attachment_filename = Column(String(255))
+
 
 def get_datetime(datetime_obj, prefix):
     date = datetime_obj.find('wtd:date', prefix).text
@@ -73,8 +82,13 @@ def convert_data():
     prefix_map = {"wtd": "http://www.webtodate.cz/schemas/2.0/SimpleSchema"}
     news = tree.findall('wtd:news', prefix_map)
 
-    sources = []
+    sources = ['Neznámý'];
     categories = []
+
+    null_source = Source()
+    null_source.name = 'Neznámý'
+    DBSession.add(null_source)
+    DBSession.commit()
 
     for row in tqdm(iterable=news, total=len(news)):
         message_obj = Message()
@@ -91,9 +105,10 @@ def convert_data():
                 source_obj = Source()
                 source_obj.name = source
                 DBSession.add(source_obj)
+                DBSession.commit()
             source_id = sources.index(source) + 1
         else:
-            source_id = None
+            source_id = 1
 
         # Title
         category = row.find('.//wtd:category[@name="Úřední deska"]/wtd:category', prefix_map)
@@ -105,21 +120,26 @@ def convert_data():
                 category_obj = Category()
                 category_obj.name = category
                 DBSession.add(category_obj);
+                DBSession.commit()
             category_id = categories.index(category) + 1
         else:
             category_id = None
 
-        # Attachment
+        # Attachments
         urlprefix = row.find('.//wtd:urlprefix', prefix_map).text;
         assetsfolder = row.find('.//wtd:assetsfolder', prefix_map).text;
-        attachment = row.find('.//wtd:attachment', prefix_map)
-        print(len(row.findall('.//wtd:attachment', prefix_map)))
+        instances = row.findall('.//wtd:instance', prefix_map)
 
-        if (attachment != None):
-            filename = attachment.find('wtd:filename', prefix_map).text;
-            filepath = attachment.find('wtd:filepath', prefix_map).text;
-            message_obj.attachment_filename = filename
-            message_obj.attachment_url = urlprefix + '/' + assetsfolder + filepath + filename
+        for instance in instances:
+            instance_obj = Instance()
+            instance_obj.title = instance.find('wtd:title', prefix_map).text;
+            attachment = instance.find('.//wtd:attachment', prefix_map)
+            if attachment != None:
+                filename = attachment.find('wtd:filename', prefix_map).text;
+                filepath = attachment.find('wtd:filepath', prefix_map).text;
+                instance_obj.attachment_filename = filename
+                instance_obj.attachment_url = urlprefix + '/' + assetsfolder + filepath + filename
+            message_obj.children.append(instance_obj);
 
         # Datetimes
         datetime_published = row.find('wtd:datepublished', prefix_map);
@@ -133,6 +153,11 @@ def convert_data():
 
         if (datetime_expired != None):
             message_obj.expired_datetime = get_datetime(datetime_expired, prefix_map)
+
+        # Body HTML
+        body = row.find('wtd:body', prefix_map);
+        if (body != None):
+            message_obj.body = body.text
 
         message_obj.title = title
         message_obj.source_id = source_id
