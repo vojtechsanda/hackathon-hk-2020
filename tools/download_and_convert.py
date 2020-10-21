@@ -15,6 +15,18 @@ class Message(Base):
     __tablename__ = "message"
     id = Column(Integer, primary_key=True, unique=True)
     title = Column(String(255))
+    source_id = Column(Integer)#, ForeignKey('source.id')*/)
+    domain_id = Column(Integer)
+
+class Source(Base):
+    __tablename__ = "source"
+    id = Column(Integer, primary_key=True, unique=True)
+    name = Column(String(255))
+
+class Domain(Base):
+    __tablename__ = "domain"
+    id = Column(Integer, primary_key=True, unique=True)
+    name = Column(String(255))
 
 def download_from_url(url, dst, req=None):
     if req is None:
@@ -49,15 +61,47 @@ def convert_data():
     tree = etree.parse('data.xml')
     prefix_map = {"wtd": "http://www.webtodate.cz/schemas/2.0/SimpleSchema"}
     news = tree.findall('wtd:news', prefix_map)
-    for row in tqdm(iterable=news, total=len(news)):
-        title = row.find('wtd:title', prefix_map).text
 
-        message = Message()
-        message.title = title
-        print(title)
-        DBSession.add(message)
-        DBSession.flush()
+    sources = []
+    domains = []
+
+    for row in tqdm(iterable=news, total=len(news)):
+        title = row.find('wtd:title', prefix_map).text.strip()
+        source = row.find('wtd:source', prefix_map)
+        if (source != None):
+            source = source.text.strip()
+
+            if (source not in sources):
+                sources.append(source)
+                source_obj = Source()
+                source_obj.name = source
+                DBSession.add(source_obj)
+            source_id = sources.index(source) + 1
+        else:
+            source_id = None
+
+        domain = row.find('.//wtd:category[@name="Úřední deska"]/wtd:category', prefix_map)
+        if (domain != None):
+            domain = domain.attrib['name'].strip()
+
+            if (domain not in domains):
+                domains.append(domain)
+                domain_obj = Domain()
+                domain_obj.name = domain
+                DBSession.add(domain_obj);
+            domain_id = domains.index(domain) + 1
+        else:
+            domain_id = None
+
+        message_obj = Message()
+        message_obj.title = title
+        #TODO
+        message_obj.source_id = source_id
+        message_obj.domain_id = domain_id
+        DBSession.add(message_obj)
     DBSession.commit()
+
+    print(sources)
 
 if __name__ == '__main__':
     #download_data()
