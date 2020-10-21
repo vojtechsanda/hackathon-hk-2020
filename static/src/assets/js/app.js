@@ -23,21 +23,21 @@ class SearchController {
             search: new Search(records),
         };
     }
-    render(categories, fields) {
+    render(categories, sources) {
         searchView.renderCategoriesSelectOptions(categories);
-        searchView.renderFieldsSelectOptions(fields);
+        searchView.renderSourcesSelectOptions(sources);
     }
     getSearchedRecords() {
         const searchedTxt = searchView.getSearchedTxt();
         const selectedCategory = searchView.getCategory();
-        const selectedField = searchView.getField();
+        const selectedSource = searchView.getSource();
 
-        const searchedRecords = this.state.search.search(searchedTxt, selectedCategory, selectedField);
+        const searchedRecords = this.state.search.search(searchedTxt, selectedCategory, selectedSource);
 
         return searchedRecords;
     }
-    init(categories, fields) {
-        this.render(categories, fields);
+    init(categories, sources) {
+        this.render(categories, sources);
     }
 }
 
@@ -79,7 +79,7 @@ class Desk {
             return false;
         }
 
-        const records = resp.data.allRecords;
+        const records = resp.data;
 
         return records;
     }
@@ -87,29 +87,29 @@ class Desk {
         let resp;
 
         try {
-            resp = await Axios('/api/sources/');
+            resp = await Axios('/api/categories/');
         } catch {
             console.error('Nebylo možné kategorie data');
             return false;
         }
 
-        const categories = resp.data.allCategories;
+        const categories = resp.data;
 
         return categories;
     }
-    async fetchAllFields() {
+    async fetchAllSources() {
         let resp;
 
         try {
-            resp = await Axios('/api/categories/');
+            resp = await Axios('/api/sources/');
         } catch {
             console.error('Nebylo možné načíst oblasti');
             return false;
         }
 
-        const fields = resp.data.allFields;
+        const sources = resp.data;
 
-        return fields;
+        return sources;
     }
     async getAllData() {
         const records = await this.fetchAllRecords();
@@ -118,12 +118,12 @@ class Desk {
         const categories = await this.fetchAllCategories();
         if (categories === false) return;
 
-        const fields = await this.fetchAllFields();
-        if (fields === false) return;
+        const sources = await this.fetchAllSources();
+        if (sources === false) return;
 
         this.state.records = records;
         this.state.categories = categories;
-        this.state.fields = fields;
+        this.state.sources = sources;
 
         return true;
     }
@@ -140,7 +140,7 @@ class Desk {
     }
     initControllers() {
         this.controllers.search = new SearchController(this.state.records);
-        this.controllers.search.init(this.state.categories, this.state.fields);
+        this.controllers.search.init(this.state.categories, this.state.sources);
 
         this.controllers.results = new ResultsController(this.state.records);
         this.controllers.results.render();

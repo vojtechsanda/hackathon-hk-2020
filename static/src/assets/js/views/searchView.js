@@ -5,7 +5,7 @@ export const renderCategoriesSelectOptions = categories => {
 
     categories.forEach(category => {
         const optionMarkup = `
-            <option value="${category}">${category}</option>
+            <option value="${category.id}">${category.name}</option>
         `;
         
         categoriesMarkup += optionMarkup;
@@ -13,20 +13,20 @@ export const renderCategoriesSelectOptions = categories => {
 
     elements.searchCategorySelect.insertAdjacentHTML('beforeend', categoriesMarkup);
 }
-export const renderFieldsSelectOptions = fields => {
-    let fieldsMarkup = '';
+export const renderSourcesSelectOptions = sources => {
+    let sourcesMarkup = '';
 
-    fields.forEach((field) => {
+    sources.forEach((source) => {
         const optionMarkup = `
-        <option value="${field}">${field}</option>
+        <option value="${source.id}">${source.name}</option>
     `;
 
-        fieldsMarkup += optionMarkup;
+        sourcesMarkup += optionMarkup;
     });
 
-    elements.searchFieldSelect.insertAdjacentHTML(
+    elements.searchSourceSelect.insertAdjacentHTML(
         'beforeend',
-        fieldsMarkup
+        sourcesMarkup
     );
 }
 export const getSearchedTxt = () => {
@@ -37,7 +37,7 @@ export const getCategory = () => {
     const selectedCategory = elements.searchCategorySelect.value;
     return selectedCategory.length === 0 ? false : selectedCategory;
 };
-export const getField = () => {
-    const selectedField = elements.searchFieldSelect.value;
-    return selectedField.length === 0 ? false : selectedField;
+export const getSource = () => {
+    const selectedSource = elements.searchSourceSelect.value;
+    return selectedSource.length === 0 ? false : selectedSource;
 };
