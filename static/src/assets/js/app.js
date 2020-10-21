@@ -10,7 +10,7 @@ import Search from './models/Search';
 
 // Results component
 import * as resultsView from './views/resultsView';
-// import Search from './models/Search';
+import Results from './models/Results';
 
 /**
  * SEARCH controller
@@ -48,7 +48,8 @@ class SearchController {
 class ResultsController {
     constructor(records) {
         this.state = {
-            records: records
+            records: records,
+            results: new Results
         }
     }
     updateRecords(records) {
@@ -56,7 +57,10 @@ class ResultsController {
         this.render();
     }
     render() {
-        resultsView.render(this.state.records);
+        const sorters = resultsView.getSorters();
+        const sortedRecords = this.state.results.sortBy(this.state.records, sorters);
+
+        resultsView.render(sortedRecords);
         resultsView.updateResultsCount(this.state.records.length);
     }
 }
@@ -137,6 +141,14 @@ class Desk {
 
             this.controllers.results.updateRecords(searchedRecords);
         });
+
+        elements.resultSorters.forEach((sorter) => {
+            sorter.addEventListener('click', e => {
+                const sorterWrapper = e.target.closest('[data-sort-by][data-current-sort]');
+                resultsView.handleSorters(sorterWrapper);
+                this.controllers.results.render();
+            });
+        });
     }
     initControllers() {
         this.controllers.search = new SearchController(this.state.records);
@@ -159,4 +171,3 @@ class Desk {
 
 const desk = new Desk;
 desk.init();
-console.log(desk);
