@@ -1,0 +1,47 @@
+.one-result {
+
+    .grid {
+
+        display: grid;
+        grid-auto-rows: 6rem;
+        border: 1px solid rgba($color-light-text, 0.2);
+        border-radius: 0.2rem;
+        margin-bottom: 15rem;
+
+        @include size(1000) {
+            grid-auto-rows: 12rem;
+        }
+
+        .row {
+            padding: 2rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .col {
+                font-size: 1.4rem;
+
+                &:nth-child(1) {
+                    font-weight: 700;
+                }
+            }
+
+            @include size(1000) {
+                flex-direction: column;
+                align-items: flex-start;
+
+                .col {
+
+                    &:nth-child(1) {
+                        margin-bottom: 2rem;
+                    }
+                }
+            }
+
+            &:nth-child(2n + 1) {
+                background: rgba($color-light-grey, 0.5);
+            }
+        }
+    }
+
+}
