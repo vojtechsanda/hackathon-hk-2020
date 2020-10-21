@@ -1,0 +1,156 @@
+.header {
+
+    height: 42.5rem;
+    background-color: $color-light-grey;
+
+    .nav {
+
+        .maxW {
+            padding-top: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+
+            img {
+                height: 2.8rem;
+            }
+
+            &__text {
+                font-size: 2rem;
+
+                span {
+                    color: $color-primary;
+                }
+            }
+
+        }
+
+        .menu {
+
+            display: flex;
+            align-items: center;
+            list-style: none;
+
+            &__item {
+
+                &--selected {
+                    position: relative;
+
+                    &::after {
+
+                        position: absolute;
+                        bottom: -0.5rem;
+                        content: "";
+                        left: 0;
+                        height: 0.2rem;
+                        width: 1.5rem;
+                        background-color: rgba($color-text, 0.3);
+
+                    }
+                }
+
+                &:not(:last-child) {
+                    margin-right: 3.5rem;
+                }
+
+                a {
+                    font-weight: 700;
+                    color: $color-text;
+                    text-decoration: none;
+                }
+
+            }
+
+        }
+    }
+
+    .hero {
+
+        &__img {
+            width: 38rem;
+        }
+
+        &-cont {
+            &:nth-child(1) {
+                width: 63rem;
+            }
+
+            &:nth-child(2) {
+            }
+        }
+
+        .js-search-form {
+            display: flex;
+            background-color: white;
+            padding: 1.5rem 0;
+            padding-left: 4rem;
+            padding-right: 2rem;
+            border-radius: 0.2rem;
+            align-items: center;
+            justify-content: space-between;
+
+            .cont {
+                display: flex;
+                align-items: center;
+
+                &:nth-child(1) {
+                }
+
+                &:nth-child(2), &:nth-child(3) {
+                    position: relative;
+
+                    &::before {
+                        position: absolute;
+                        left: -3.5rem;
+                        background-color: rgba($color-light-text, 0.2);
+                        height: 4rem;
+                        width: 0.2rem;
+                        content: "";
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+
+                    &::after {
+                        position: absolute;
+                    }
+                }
+            }
+
+            &__ico {
+            }
+
+            ::placeholder {
+                color: $color-light-text;
+            }
+
+            .js-search-input {
+                border: none;
+                font-size: 1.6rem;
+                font-weight: 700;
+                background: transparent;
+                height: 3rem;
+                outline: none;
+                font-family: $base-font;
+            }
+
+            select {
+                outline: none;
+                font-family: $base-font;
+                border: none;
+                font-size: 1.6rem;
+                font-weight: 700;
+                color: $color-light-text;
+                appearance: none;
+            }
+        }
+
+    }
+
+}
