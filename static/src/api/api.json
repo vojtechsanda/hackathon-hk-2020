@@ -17,7 +17,8 @@
         {
             "title": "Idk něco tady prostě musí být, tak tu něco je",
             "field": "oblast_1",
-            "category": "kategorie_1"
+            "category": "kategorie_1",
+            "start_timestamp": 1603275422357
         }
     ]
 }
