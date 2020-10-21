@@ -100,8 +100,15 @@ $app->route(
       $sql .= ' WHERE ' . $sql_append;
     }
 
-    echo $sql;
-    print_r($params);
+    if (isset($_GET['limit'])) {
+      $params[':limit'] = intval($_GET['limit']);
+      $offset = $_GET['offset'];
+      if (!isset($offset)) {
+        $offset = 0;
+      }
+      $params[':offset'] = intval($offset);
+      $sql .= ' LIMIT :limit OFFSET :offset';
+    }
 
     $messages = $app->get('DB')->exec(
       $sql, $params
