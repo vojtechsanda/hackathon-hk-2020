@@ -121,12 +121,12 @@ $app->route(
     }
 
     if (isset($_GET['limit'])) {
-      $params[':limit'] = intval($_GET['limit']);
+      $sql_params[':limit'] = intval($_GET['limit']);
       $offset = $_GET['offset'];
       if (!isset($offset)) {
         $offset = 0;
       }
-      $params[':offset'] = intval($offset);
+      $sql_params[':offset'] = intval($offset);
       $sql_limit = ' LIMIT :limit OFFSET :offset';
     }
 
@@ -161,8 +161,16 @@ $app->route(
 $app->route(
   'GET /api/sources',
   function($app) {
+    $sql = "SELECT * FROM source";
+
+    $params = [];
+    if (isset($_GET['region'])) {
+      $params[':region'] = $_GET['region'];
+      $sql .= " WHERE region_id = :region";
+    }
+
     $results = $app->get('DB')->exec(
-      "SELECT * FROM source"
+      $sql, $params
     );
     header('Content-type: application/json');
     echo json_encode($results, JSON_NUMERIC_CHECK);
@@ -172,8 +180,21 @@ $app->route(
 $app->route(
   'GET /api/categories',
   function($app) {
+    $sql = "SELECT category.id, category.name, COUNT(message.id) as count
+            FROM category
+            LEFT JOIN message
+            ON message.category_id = category.id";
+
+    $params = [];
+    if (isset($_GET['region'])) {
+      $params[':region'] = $_GET['region'];
+      $sql .= " WHERE category.region_id = :region";
+    }
+
+    $sql .= " GROUP BY category.id";
+
     $results = $app->get('DB')->exec(
-      "SELECT * FROM category"
+      $sql, $params
     );
     header('Content-type: application/json');
     echo json_encode($results, JSON_NUMERIC_CHECK);
