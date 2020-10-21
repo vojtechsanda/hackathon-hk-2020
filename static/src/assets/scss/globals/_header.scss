@@ -99,6 +99,28 @@
             .cont {
                 display: flex;
                 align-items: center;
+
+                &:nth-child(1) {
+                }
+
+                &:nth-child(2), &:nth-child(3) {
+                    position: relative;
+
+                    &::before {
+                        position: absolute;
+                        left: -3.5rem;
+                        background-color: rgba($color-light-text, 0.2);
+                        height: 4rem;
+                        width: 0.2rem;
+                        content: "";
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+
+                    &::after {
+                        position: absolute;
+                    }
+                }
             }
 
             &__ico {
@@ -119,11 +141,13 @@
             }
 
             select {
+                outline: none;
                 font-family: $base-font;
                 border: none;
                 font-size: 1.6rem;
                 font-weight: 700;
                 color: $color-light-text;
+                appearance: none;
             }
         }
 
