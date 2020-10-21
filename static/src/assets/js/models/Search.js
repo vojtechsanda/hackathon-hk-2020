@@ -24,18 +24,59 @@ export default class Search {
         const searchedTerms = searchedTxt.split(' ');
         
         const searchedRecords = records.filter(record => {
+            let termsFoundInTypes = [];
+            
             for (const term of searchedTerms) {
-                if (
-                    record.title.toLowerCase().includes(term) ||
-                    record.source.toLowerCase().includes(term) ||
-                    record.category.toLowerCase().includes(term) ||
-                    record.published_datetime_txt.toLowerCase().includes(term)
-                ) {
-                    return true;
+                let foundInType = [];
+                
+                if (record.title.toLowerCase().includes(term)) {
+                    foundInType.push('title');
                 }
+                if (record.source.toLowerCase().includes(term)) {
+                    foundInType.push('source');
+                }
+                if (record.category.toLowerCase().includes(term)) {
+                    foundInType.push('category');
+                }
+                if (record.published_datetime_txt.toLowerCase().includes(term)) {
+                    foundInType.push('published_datetime');
+                }
+
+                termsFoundInTypes.push(foundInType);
             }
+
+            return this.foundInOne(termsFoundInTypes);
         });
 
         return searchedRecords;
     }
+
+    foundInOne(termsFoundInTypes) {
+        // TODO: Better name for the method
+        if (termsFoundInTypes[0] && termsFoundInTypes[0].length > 0 && !termsFoundInTypes[1]) {
+            return true;
+        }
+
+        const foundInBaseTypes = termsFoundInTypes[0];
+
+        for (let i = 1; i < termsFoundInTypes.length; i++) {
+            const foundInOtherTypes = termsFoundInTypes[i];
+            
+            if (haveItemInCommon(foundInBaseTypes, foundInOtherTypes)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+function haveItemInCommon(arr1, arr2) {
+    for (const item of arr1) {
+        if (arr2.indexOf(item) >= 0) {
+            return true;
+        }
+    }
+
+    return false;
 }
