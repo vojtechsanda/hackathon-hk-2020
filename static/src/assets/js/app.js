@@ -144,10 +144,10 @@ class Desk {
         const recordsObj = await this.fetchAllRecords(currentRegion);
         if (recordsObj === false) return;
 
-        const categories = await this.fetchAllCategories();
+        const categories = await this.fetchAllCategories(currentRegion);
         if (categories === false) return;
 
-        const sources = await this.fetchAllSources();
+        const sources = await this.fetchAllSources(currentRegion);
         if (sources === false) return;
 
         this.state.regions = regions;
