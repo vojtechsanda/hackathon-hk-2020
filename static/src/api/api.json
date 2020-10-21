@@ -1,3 +1,23 @@
-[
-    
-]
+{
+    "allFields": [
+        "oblast_1",
+        "oblast_2",
+        "oblast_3",
+        "oblast_4",
+        "oblast_5"
+    ],
+    "allCategories": [
+        "kategorie_1",
+        "kategorie_2",
+        "kategorie_3",
+        "kategorie_4",
+        "kategorie_5"
+    ],
+    "allRecords": [
+        {
+            "title": "Idk něco tady prostě musí být, tak tu něco je",
+            "field": "oblast_1",
+            "category": "kategorie_1"
+        }
+    ]
+}
