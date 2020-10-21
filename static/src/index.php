@@ -100,6 +100,21 @@ $app->route(
       $sql .= ' WHERE ' . $sql_append;
     }
 
+    $orderby = $_GET['orderby'];
+    $direction = $_GET['dir'];
+    if (isset($orderby)) {
+      $orderby = strtolower($orderby);
+      if ($orderby == 'title' || $orderby == 'published_datetime') {
+        $sql .= ' ORDER BY ' . $orderby;
+        if (isset($direction)) {
+          $direction = strtolower($direction);
+          if ($direction == 'asc' || $direction == 'desc') {
+            $sql .= ' ' . $direction;
+          }
+        }
+      }
+    }
+
     if (isset($_GET['limit'])) {
       $params[':limit'] = intval($_GET['limit']);
       $offset = $_GET['offset'];
