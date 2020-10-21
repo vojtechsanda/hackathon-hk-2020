@@ -113,7 +113,7 @@ class Desk {
         let resp;
 
         try {
-            resp = await Axios('/api/sources/?region=' + currentRegion);');
+            resp = await Axios('/api/sources/?region=' + currentRegion);
         } catch {
             console.error('Nebylo možné načíst oblasti');
             return false;
