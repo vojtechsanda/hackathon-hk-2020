@@ -1,0 +1,6 @@
+tqdm
+requests
+lxml
+sqlalchemy
+sqlalchemy_utils
+mysqlclient
