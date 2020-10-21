@@ -12,17 +12,6 @@ from datetime import datetime
 
 Base = declarative_base()
 
-class Message(Base):
-    __tablename__ = "message"
-    id = Column(Integer, primary_key=True, unique=True)
-    title = Column(String(255))
-    body = Column(Text)
-    source_id = Column(Integer)#, ForeignKey('source.id')*/)
-    category_id = Column(Integer)
-    published_datetime = Column(DateTime)
-    expired_datetime = Column(DateTime)
-    children = relationship('Instance')
-
 class Source(Base):
     __tablename__ = "source"
     id = Column(Integer, primary_key=True, unique=True)
@@ -32,6 +21,17 @@ class Category(Base):
     __tablename__ = "category"
     id = Column(Integer, primary_key=True, unique=True)
     name = Column(String(255))
+
+class Message(Base):
+    __tablename__ = "message"
+    id = Column(Integer, primary_key=True, unique=True)
+    title = Column(String(255))
+    body = Column(Text)
+    source_id = Column(Integer, ForeignKey('source.id'))
+    category_id = Column(Integer, ForeignKey('category.id'))
+    published_datetime = Column(DateTime)
+    expired_datetime = Column(DateTime)
+    children = relationship('Instance')
 
 class Instance(Base):
     __tablename__ = "instance"
@@ -82,8 +82,13 @@ def convert_data():
     prefix_map = {"wtd": "http://www.webtodate.cz/schemas/2.0/SimpleSchema"}
     news = tree.findall('wtd:news', prefix_map)
 
-    sources = []
+    sources = ['Neznámý'];
     categories = []
+
+    null_source = Source()
+    null_source.name = 'Neznámý'
+    DBSession.add(null_source)
+    DBSession.commit()
 
     for row in tqdm(iterable=news, total=len(news)):
         message_obj = Message()
@@ -100,9 +105,10 @@ def convert_data():
                 source_obj = Source()
                 source_obj.name = source
                 DBSession.add(source_obj)
+                DBSession.commit()
             source_id = sources.index(source) + 1
         else:
-            source_id = None
+            source_id = 1
 
         # Title
         category = row.find('.//wtd:category[@name="Úřední deska"]/wtd:category', prefix_map)
@@ -114,6 +120,7 @@ def convert_data():
                 category_obj = Category()
                 category_obj.name = category
                 DBSession.add(category_obj);
+                DBSession.commit()
             category_id = categories.index(category) + 1
         else:
             category_id = None
