@@ -17,8 +17,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: './src/index.html',
+            filename: 'templates/index.html',
+            template: './src/templates/index.html',
             chunks: ['app'],
         }),
         new MiniCssExtractPlugin({
@@ -31,8 +31,12 @@ module.exports = {
             },
             {
                 from: 'src/api/api.json',
-                to: 'api/api.json',
+                to: 'api_v0/api.json',
             },
+            {
+                from: 'src/index.php',
+                to: 'index.php'
+            }
         ]),
     ],
     module: {

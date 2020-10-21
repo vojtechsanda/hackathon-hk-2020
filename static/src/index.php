@@ -11,6 +11,13 @@ $app->set('DB', new DB\SQL(
 ));
 
 $app->route(
+  'GET /',
+  function () {
+    echo Template::instance()->render('templates/index.html');
+  }
+);
+
+$app->route(
   'GET /api/all',
   function($app) {
     $results = $app->get('DB')->exec(
