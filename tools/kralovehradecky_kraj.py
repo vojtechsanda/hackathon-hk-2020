@@ -3,6 +3,7 @@ from lxml import etree
 from structure import Instance, Category, Source, Message, Region
 from tqdm import tqdm
 
+# Helper function for conversion from lxml tree to datetime string
 def get_datetime(datetime_obj, prefix):
     date = datetime_obj.find('wtd:date', prefix).text
     time = datetime_obj.find('wtd:time', prefix).text
@@ -27,24 +28,27 @@ class KralovehradeckyKraj:
     download_from_url('http://www.kr-kralovehradecky.cz/xml/export/eldeska-zpravy.xml', 'data/kralovehradecky_kraj.xml')
 
   def convert(self):
+    # Init lxml tree parsing
     tree = etree.parse('data/kralovehradecky_kraj.xml')
     prefix_map = {"wtd": "http://www.webtodate.cz/schemas/2.0/SimpleSchema"}
     news = tree.findall('wtd:news', prefix_map)
 
     sources = ['Neznámý'];
-    categories = []
-
+    # Create dummy source
     null_source = Source()
     null_source.name = 'Neznámý'
     null_source.region_id = self.region_id
     self.db_session.add(null_source)
     self.db_session.commit()
 
+    categories = []
+
     for row in tqdm(iterable=news, total=len(news)):
         message_obj = Message()
         message_obj.region_id = self.region_id
 
-        title = row.find('wtd:title', prefix_map).text.strip()
+        # Title
+        message_obj.title = row.find('wtd:title', prefix_map).text.strip()
 
         # Source
         source = row.find('wtd:source', prefix_map)
@@ -61,8 +65,9 @@ class KralovehradeckyKraj:
             source_id = sources.index(source) + 1
         else:
             source_id = 1
+        message_obj.source_id = source_id
 
-        # Title
+        # Category
         category = row.find('.//wtd:category[@name="Úřední deska"]/wtd:category', prefix_map)
         if (category != None):
             category = category.attrib['name'].strip()
@@ -77,6 +82,7 @@ class KralovehradeckyKraj:
             category_id = categories.index(category) + 1
         else:
             category_id = None
+        message_obj.category_id = category_id
 
         # Attachments
         urlprefix = row.find('.//wtd:urlprefix', prefix_map).text;
@@ -112,8 +118,5 @@ class KralovehradeckyKraj:
         if (body != None):
             message_obj.body = body.text
 
-        message_obj.title = title
-        message_obj.source_id = source_id
-        message_obj.category_id = category_id
         self.db_session.add(message_obj)
     self.db_session.commit()
