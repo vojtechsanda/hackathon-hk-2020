@@ -28,7 +28,8 @@ export default class Search {
                 if (
                     record.title.toLowerCase().includes(term) ||
                     record.source.toLowerCase().includes(term) ||
-                    record.category.toLowerCase().includes(term)
+                    record.category.toLowerCase().includes(term) ||
+                    record.published_datetime_txt.toLowerCase().includes(term)
                 ) {
                     return true;
                 }
