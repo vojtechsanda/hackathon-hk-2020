@@ -5,4 +5,5 @@ export const elements = {
     searchSourceSelect: document.querySelector('.js-source-select'),
     resultsWrapper: document.querySelector('.js-results-wrapper'),
     resultsCount: document.querySelector('.js-results-count'),
+    resultSorters: Array.from(document.querySelectorAll('.js-results-sort-by')),
 };
