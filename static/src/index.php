@@ -120,6 +120,10 @@ $app->route(
       }
     }
 
+    $message_count = $app->get('DB')->exec(
+      'SELECT COUNT(*) FROM message ' . $sql_filters, $sql_params
+    );
+
     if (isset($_GET['limit'])) {
       $sql_params[':limit'] = intval($_GET['limit']);
       $offset = $_GET['offset'];
@@ -132,10 +136,6 @@ $app->route(
 
     $messages = $app->get('DB')->exec(
       'SELECT ' . $sql_variables . $sql_filters . $sql_order . $sql_limit, $sql_params
-    );
-
-    $message_count = $app->get('DB')->exec(
-      'SELECT COUNT(*) FROM message ' . $sql_filters, $sql_params
     );
 
     if (count($message_count) > 0) {
