@@ -29,6 +29,8 @@ $app->route(
         message.body,
         1000 * UNIX_TIMESTAMP(message.published_datetime) as published_datetime,
         1000 * UNIX_TIMESTAMP(message.expired_datetime) as expired_datetime,
+        DATE_FORMAT(message.published_datetime, '%e.%c.%Y') as published_datetime_txt,
+        DATE_FORMAT(message.expired_datetime, '%e.%c.%Y') as expired_datetime_txt,
         source.name as source,
         category.name as category
        FROM message
