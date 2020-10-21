@@ -1,10 +1,11 @@
-@import './base/variables.scss';
-@import './base/utility.scss';
-@import './base/typography.scss';
-@import './base/margins.scss';
-@import './base/base.scss';
+@import './base/variables';
+@import './base/utility';
+@import './base/typography';
+@import './base/margins';
+@import './base/paddings';
+@import './base/base';
 
-@import "./elements/buttons.scss";
+@import "./elements/buttons";
 
 @import "./globals/header";
 

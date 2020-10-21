@@ -36,6 +36,7 @@ class KralovehradeckyKraj:
 
     null_source = Source()
     null_source.name = 'Neznámý'
+    null_source.region_id = self.region_id
     self.db_session.add(null_source)
     self.db_session.commit()
 
@@ -54,6 +55,7 @@ class KralovehradeckyKraj:
                 sources.append(source)
                 source_obj = Source()
                 source_obj.name = source
+                source_obj.region_id = self.region_id
                 self.db_session.add(source_obj)
                 self.db_session.commit()
             source_id = sources.index(source) + 1
@@ -69,6 +71,7 @@ class KralovehradeckyKraj:
                 categories.append(category)
                 category_obj = Category()
                 category_obj.name = category
+                category_obj.region_id = self.region_id
                 self.db_session.add(category_obj);
                 self.db_session.commit()
             category_id = categories.index(category) + 1

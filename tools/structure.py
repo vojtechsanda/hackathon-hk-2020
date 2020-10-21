@@ -12,11 +12,13 @@ class Region(Base):
 class Source(Base):
     __tablename__ = "source"
     id = Column(Integer, primary_key=True, unique=True)
+    region_id = Column(Integer, ForeignKey('region.id'))
     name = Column(String(255))
 
 class Category(Base):
     __tablename__ = "category"
     id = Column(Integer, primary_key=True, unique=True)
+    region_id = Column(Integer, ForeignKey('region.id'))
     name = Column(String(255))
 
 class Message(Base):

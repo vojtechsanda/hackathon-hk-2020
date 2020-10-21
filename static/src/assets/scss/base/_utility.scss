@@ -9,10 +9,18 @@
 }
 
 .bold {
-    font-weight: 700;
+    font-weight: 700 !important;
 }
 
 .space-between {
     justify-content: space-between;
+}
+
+.c-text-light {
+    color: $color-light-text;
+}
+
+.opacity-3 {
+    opacity: .3;
 }
 

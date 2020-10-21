@@ -25,97 +25,102 @@
     <section class="hero mt-8">
         <div class="maxW">
             <div class="flex space-between">
-                <div class="hero-cont">
-                    <h1 class="headline headline--primary mb-2">Úřední deska <span>Královéhradeckého kraje</span></h1>
-                    <p class="text text--big">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras pede
-                        libero.</p>
+                <div class="hero-cont pt-6">
+                    <h1 class="headline headline--primary mb-2 pl-2_5">Úřední deska <span>Královéhradeckého kraje</span>
+                    </h1>
+                    <p class="text text--big c-text-light">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                        Cras pede libero.</p>
                 </div>
                 <div class="hero-cont">
                     <img src="../assets/imgs/hero-illustration.svg" class="hero__img" alt="Úvodní ilustrace - monitor">
                 </div>
             </div>
-            <form class="js-search-form">
+            <form class="js-search-form mt-5_5">
+                <span class="js-search-form-name">Vyhledávání</span>
                 <div class="cont">
                     <img src="../assets/imgs/search.svg" class="js-search-form__ico" alt="Ikona vyhledávání">
-                    <input type="text" placeholder="Zadej název" class="js-search-input ml-2">
+                    <input type="text" placeholder="Zadej název" class="js-search-input pl-4 pr-3">
                 </div>
                 <div class="cont">
                     <img src="assets/imgs/user.svg" class="js-search-form__ico" alt="Ikona Autora">
-                    <select class="js-source-select ml-2">
+                    <select class="js-source-select pl-8">
                         <option value="">Autor</option>
                     </select>
+                    <img src="assets/imgs/arr-down.svg" class="js-search-form__drop" alt="Šipka dolů">
                 </div>
                 <div class="cont">
                     <img src="assets/imgs/kategorie.svg" class="js-search-form__ico" alt="Ikona kategorie">
-                    <select class="js-category-select ml-2">
+                    <select class="js-category-select pl-8">
                         <option value="">Kategorie</option>
                     </select>
+                    <img src="assets/imgs/arr-down.svg" class="js-search-form__drop" alt="Šipka dolů">
                 </div>
                 <button class="btn btn--primary">Vyhledej</button>
             </form>
         </div>
     </section>
 </header>
-<main class="main">
+<main class="main mt-10">
     <section class="main-content">
         <div class="maxW">
-            <div class="filter">
+            <div class="filter mb-2_5">
                 <div class="filter-item">
-                    <h2 class="headline headline--secondary">Kategorie</h2>
+                    <h2 class="headline headline--secondary mb-2">Kategorie</h2>
                     <ul class="filter-item-list js-category-side">
                     </ul>
                 </div>
                 <div class="filter-item">
-                    <h2 class="headline headline--secondary">Oblasti</h2>
+                    <h2 class="headline headline--secondary mb-2">Autor</h2>
                     <ul class="filter-item-list js-sources-side">
                     </ul>
                 </div>
             </div>
-            <div class="results">
-                <div class="results-header">
+            <div class="results ml-3_5">
+                <div class="results-header mb-2_5">
                     <h2 class="headline headline--secondary">Nalezeno <span class="js-results-count">392</span> výsledků
                     </h2>
                     <div class="results__filter">
-                        <p class="text text--medium bold"></p>
-                        <div class="results__filter-name js-results-sort-by" data-sort-by="title"
+                        <p class="text text--medium bold mr-2">Seřadit podle:</p>
+                        <div class="results__filter-item js-results-sort-by" data-sort-by="title"
                              data-current-sort="none">
                             Názvu
-                            <span>
-                            <img src="../assets/imgs/arr-down-primary.svg" alt="Šipka nahoru">
-                            <img src="../assets/imgs/arr-down-primary.svg" alt="Šipka dolů">
-                        </span>
+                            <span class="results__filter-item__icons">
+                                <img src="../assets/imgs/arr-down-primary.svg" class="opacity-3" alt="Šipka nahoru">
+                                <img src="../assets/imgs/arr-down-primary.svg" class="opacity-3" alt="Šipka dolů">
+                            </span>
                         </div>
-                        <div class="results__filter-date js-results-sort-by" data-sort-by="published_datetime"
+                        <div class="results__filter-item js-results-sort-by" data-sort-by="published_datetime"
                              data-current-sort="desc">
                             Zveřejnění
-                            <span>
-                            <img src="../assets/imgs/arr-down-primary.svg" alt="Šipka nahoru">
-                            <img src="../assets/imgs/arr-down-primary.svg" alt="Šipka dolů">
-                        </span>
+                            <span class="results__filter-item__icons">
+                                <img src="../assets/imgs/arr-down-primary.svg" class="opacity-3" alt="Šipka nahoru">
+                                <img src="../assets/imgs/arr-down-primary.svg" alt="Šipka dolů">
+                            </span>
                         </div>
                     </div>
                 </div>
                 <div class="results-body js-results-wrapper">
-                    <!-- <div class="result">
-                        <h3 class="result__title mb-2">OM2/97/2020 záměr pronajmout NP č. 503, ulice M.Horákové čp.
-                            504</h3>
-                        <div class="flex mb-2_5">
-                            <div class="cont">
-                                <img src="assets/imgs/result-source.svg" class="result__icon"
-                                     alt="Ikona autora u výsledku">
-                                <p class="text text--medium ml-1">Autor</p>
-                            </div>
-                            <div class="cont ml-3">
-                                <img src="assets/imgs/result-calendar.svg" class="result__icon"
-                                     alt="Ikona kalendáře u výsledku">
-                                <p class="text text--medium ml-1">19.10.2020</p>
-                            </div>
-                        </div>
-                        <div class="result-categories">
-                            <div class="category">Dopravní značení</div>
-                        </div>
-                        <button class="result__show">Zobrazit výsledek</button>
-                    </div> -->
+                    <!--  <div class="result">
+                          <a href="#" class="result__title mb-2">OM2/97/2020 záměr pronajmout NP č. 503, ulice
+                              M.Horákové
+                              čp. 504</a>
+                          <div class="flex mb-3">
+                              <div class="cont">
+                                  <img src="assets/imgs/result-user.svg" class="result__icon"
+                                       alt="Ikona autora u výsledku">
+                                  <p class="text text--medium ml-1">Autor</p>
+                              </div>
+                              <div class="cont ml-3">
+                                  <img src="assets/imgs/result-calendar.svg" class="result__icon"
+                                       alt="Ikona kalendáře u výsledku">
+                                  <p class="text text--medium ml-1">19.10.2020</p>
+                              </div>
+                          </div>
+                          <div class="result-category">Dopravní značení</div>
+                          <a href="#" class="result__show">Zobrazit výsledek
+                              <img src="assets/imgs/res-rec.svg" alt="">
+                          </a>
+                      </div> -->
                 </div>
             </div>
         </div>
