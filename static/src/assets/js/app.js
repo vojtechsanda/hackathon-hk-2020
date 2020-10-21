@@ -32,12 +32,13 @@ class SearchController {
     updateFilter(filterType, filterOptionId) {
         searchView.updateFilter(filterType, filterOptionId);
     }
-    getSearchedRecords() {
+    async getSearchedRecords(currentRegion) {
         const searchedTxt = searchView.getSearchedTxt();
         const selectedCategory = searchView.getCategory();
         const selectedSource = searchView.getSource();
 
-        const searchedRecords = this.state.search.search(
+        const searchedRecords = await this.state.search.search(
+            currentRegion,
             searchedTxt,
             selectedCategory,
             selectedSource
@@ -82,11 +83,11 @@ class Desk {
         this.state = {};
         this.controllers = {};
     }
-    async fetchAllRecords() {
+    async fetchAllRecords(currentRegion) {
         let resp;
 
         try {
-            resp = await Axios('/api/all/');
+            resp = await Axios('/api/search/?region=' + currentRegion);
         } catch {
             console.error('Nebylo možné načíst data');
             return false;
@@ -124,8 +125,25 @@ class Desk {
 
         return sources;
     }
-    async getAllData() {
-        const records = await this.fetchAllRecords();
+    async fetchRegions() {
+        let resp;
+
+        try {
+            resp = await Axios('/api/regions/');
+        } catch {
+            console.error('Nebylo možné načíst regiony');
+            return false;
+        }
+
+        const regions = resp.data;
+
+        return regions;
+    }
+    async getAllData(currentRegion) {
+        const regions = await this.fetchRegions();
+        if (regions === false) return;
+
+        const records = await this.fetchAllRecords(currentRegion);
         if (records === false) return;
 
         const categories = await this.fetchAllCategories();
@@ -134,6 +152,7 @@ class Desk {
         const sources = await this.fetchAllSources();
         if (sources === false) return;
 
+        this.state.regions = regions;
         this.state.records = records;
         this.state.categories = categories;
         this.state.sources = sources;
@@ -141,40 +160,54 @@ class Desk {
         return true;
     }
 
+    setRegion(regionId = 1) {
+        this.state.currentRegion = regionId;
+    }
+
     setupEvents() {
-        elements.searchForm.addEventListener('submit', e => {
+        elements.searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const searchedRecords = this.controllers.search.getSearchedRecords(this.state.records);
+            const searchedRecords = await this.controllers.search.getSearchedRecords(this.state.currentRegion);
             this.state.searchedRecords = searchedRecords;
 
             this.controllers.results.updateRecords(searchedRecords);
         });
 
         elements.resultSorters.forEach((sorter) => {
-            sorter.addEventListener('click', e => {
+            sorter.addEventListener('click', (e) => {
                 const sorterWrapper = e.target.closest('[data-sort-by][data-current-sort]');
                 resultsView.handleSorters(sorterWrapper);
                 this.controllers.results.render();
             });
         });
 
-        elements.searchCategorySide.addEventListener('click', e => {
+        elements.searchCategorySide.addEventListener('click', async (e) => {
             const categoryOption = e.target.closest('[data-option-id]');
-            
+
             if (categoryOption) {
                 const categoryId = categoryOption.dataset.optionId;
                 searchView.resetFilters();
                 searchView.updateFilter('category', categoryId);
+
+                const searchedRecords = await this.controllers.search.getSearchedRecords(this.state.currentRegion);
+                this.state.searchedRecords = searchedRecords;
+
+                this.controllers.results.updateRecords(searchedRecords);
             }
-        })
-        elements.searchSourcesSide.addEventListener('click', e => {
+        });
+        elements.searchSourcesSide.addEventListener('click', async (e) => {
             const sourceOption = e.target.closest('[data-option-id]');
 
             if (sourceOption) {
                 const sourceId = sourceOption.dataset.optionId;
                 searchView.resetFilters();
                 searchView.updateFilter('source', sourceId);
+
+                const searchedRecords = await this.controllers.search.getSearchedRecords(this.state.currentRegion);
+                this.state.searchedRecords = searchedRecords;
+
+                this.controllers.results.updateRecords(searchedRecords);
             }
         });
     }
@@ -186,7 +219,11 @@ class Desk {
         this.controllers.results.render();
     }
     async init() {
-        const fetchedDataStatus = await this.getAllData();
+        this.setRegion(1);
+
+        const fetchedDataStatus = await this.getAllData(
+            this.state.currentRegion
+        );
         if (!fetchedDataStatus) {
             alert('Nějaký zdroj se nenačtl');
             return;
@@ -199,3 +236,4 @@ class Desk {
 
 const desk = new Desk;
 desk.init();
+console.log(desk);

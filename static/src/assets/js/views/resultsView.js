@@ -1,4 +1,4 @@
-import { elements } from './base';
+import {elements} from './base';
 
 export const render = records => {
     const resultsWrapper = elements.resultsWrapper;
@@ -9,10 +9,10 @@ export const render = records => {
     records.forEach(record => {
         const markup = `
             <div class="result">
-                <h3 class="result__title mb-2">${record.title}</h3>
+                <a href="#" class="result__title mb-2">${record.title}</a>
                 <div class="flex mb-2_5">
                     <div class="cont">
-                        <img src="assets/imgs/result-oblast.svg" class="result__icon" alt="Ikona oblasti u výsledku">
+                        <img src="assets/imgs/result-user.svg" class="result__icon" alt="Ikona oblasti u výsledku">
                         <p class="text text--medium ml-1">${record.source}</p>
                     </div>
                     <div class="cont ml-3">
@@ -20,10 +20,10 @@ export const render = records => {
                         <p class="text text--medium ml-1">${formatDate(record.published_datetime)}</p>
                     </div>
                 </div>
-                <div class="result-categories">
-                    <div class="category">${record.category}</div>
-                </div>
-                <button class="result__show">Zobrazit výsledek</button>
+                <div class="result-category">Dopravní značení</div>
+                <a href="#" class="result__show">Zobrazit výsledek
+                    <img src="assets/imgs/res-rec.svg" alt="">
+                </a>
             </div>
         `;
 
@@ -34,14 +34,14 @@ export const render = records => {
 export const getSorters = () => {
     const sortersElems = elements.resultSorters;
     let sorters = [];
-    
+
     sortersElems.forEach((sorterEl) => {
         sorters.push({
             sortBy: sorterEl.dataset.sortBy,
             sortOrder: sorterEl.dataset.currentSort,
         });
     });
-    
+
     return sorters;
 }
 

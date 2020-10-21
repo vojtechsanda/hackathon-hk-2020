@@ -1,0 +1,195 @@
+.main-content {
+
+    .maxW {
+        display: flex;
+    }
+
+    .filter {
+
+        width: 31rem;
+
+        &-item {
+
+            background-color: $color-light-purple;
+            padding: 2.5rem;
+            border-radius: 0.2rem;
+
+            &:not(:last-child) {
+                margin-bottom: 3rem;
+            }
+
+            &-list {
+
+                list-style: none;
+
+                &__item {
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    color: $color-primary;
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    cursor: pointer;
+
+                    &:not(:last-child) {
+                        margin-bottom: 1.5rem;
+                    }
+
+                    span {
+                        border-radius: 50%;
+                        width: 2.5rem;
+                        height: 2.5rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                        color: $color-primary;
+                        background-color: $color-purple;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    .results {
+        width: calc(100% - 34.5rem);
+
+        &-header {
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+        }
+
+        &__filter {
+
+            display: flex;
+            align-items: flex-end;
+
+            div {
+                &:not(:last-child) {
+                    margin-right: 2rem;
+                }
+            }
+
+            &-item {
+                font-weight: 700;
+                color: $color-primary;
+                display: flex;
+                align-items: center;
+                font-size: 1.4rem;
+                cursor: pointer;
+
+                &__icons {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    margin-left: 1rem;
+
+                    img {
+
+                        width: 1rem;
+
+                        &:first-child {
+                            margin-bottom: .6rem;
+                            transform: rotate(180deg);
+                        }
+
+                    }
+                }
+            }
+
+        }
+
+        &-body {
+            .result {
+                background: white;
+                border: 0.1rem solid rgba($color-light-text, 0.2);
+                padding: 2.5rem;
+                position: relative;
+
+                &:not(:last-child) {
+                    margin-bottom: 3rem;
+                }
+
+                &-category {
+                    background: $color-light-blue;
+                    color: $color-blue;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    padding: 1rem 0;
+                    padding-left: 3rem;
+                    padding-right: 2rem;
+                    border-radius: 2rem;
+                    display: inline-block;
+                    position: relative;
+
+                    &::before {
+
+                        content: "";
+                        background: $color-blue;
+                        border-radius: 50%;
+                        height: .5rem;
+                        width: .5rem;
+                        left: 1.5rem;
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+
+                    }
+                }
+
+                .cont {
+                    display: flex;
+                    align-items: center;
+                }
+
+                &__title {
+                    color: $color-primary;
+                    font-size: 1.6rem;
+                    font-weight: 700;
+                    display: inline-block;
+                }
+
+                &__icon {
+                    width: 1.5rem;
+                }
+
+                &-categories {
+                    .category {
+
+                    }
+                }
+
+                &__show {
+
+                    position: absolute;
+                    right: 2.5rem;
+                    bottom: 1.5rem;
+                    z-index: 5;
+                    font-size: 1.3rem;
+                    color: $color-primary;
+                    text-decoration: none;
+                    font-weight: 700;
+
+                    img {
+                        z-index: -1;
+                        right: -2.5rem;
+                        bottom: -1.5rem;
+                        width: 19rem;
+                        position: absolute;
+                    }
+                }
+            }
+        }
+    }
+
+}

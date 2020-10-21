@@ -77,9 +77,25 @@
             width: 38rem;
         }
 
+        .headline--primary {
+            position: relative;
+
+            &::after {
+                position: absolute;
+                content: "";
+                background: rgba($color-text, 0.3);
+                left: 0;
+                top: 50%;
+                width: 1rem;
+                height: 0.3rem;
+
+                transform: translateY(-50%);
+            }
+        }
+
         &-cont {
             &:nth-child(1) {
-                width: 63rem;
+                width: 65rem;
             }
 
             &:nth-child(2) {
@@ -87,28 +103,54 @@
         }
 
         .js-search-form {
-            display: flex;
             background-color: white;
             padding: 1.5rem 0;
             padding-left: 4rem;
             padding-right: 2rem;
             border-radius: 0.2rem;
-            align-items: center;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr repeat(2, 27rem) min-content;
+            box-shadow: 0 3rem 3rem rgba(#808080, 0.05);
+            position: relative;
+
+            &__drop {
+                position: absolute;
+                right: 3rem;
+                width: 1.4rem;
+            }
+
+            &-name {
+                position: absolute;
+                left: 1rem;
+                top: -3rem;
+                background-color: $color-primary;
+                color: white;
+                width: 13.5rem;
+                height: 3rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.3rem;
+                font-weight: 700;
+                border-top-right-radius: 0.2rem;
+                border-top-left-radius: 0.2rem;
+            }
 
             .cont {
                 display: flex;
+                position: relative;
                 align-items: center;
 
-                &:nth-child(1) {
-                }
-
-                &:nth-child(2), &:nth-child(3) {
+                &:nth-of-type(2), &:nth-of-type(3) {
                     position: relative;
+
+                    .js-search-form__ico {
+                        left: 3rem;
+                    }
 
                     &::before {
                         position: absolute;
-                        left: -3.5rem;
+                        left: 0rem;
                         background-color: rgba($color-light-text, 0.2);
                         height: 4rem;
                         width: 0.2rem;
@@ -117,13 +159,13 @@
                         transform: translateY(-50%);
                     }
 
-                    &::after {
-                        position: absolute;
-                    }
                 }
             }
 
             &__ico {
+                position: absolute;
+                width: 2rem;
+                left: 0rem;
             }
 
             ::placeholder {
@@ -135,9 +177,11 @@
                 font-size: 1.6rem;
                 font-weight: 700;
                 background: transparent;
-                height: 3rem;
+                height: 5rem;
                 outline: none;
                 font-family: $base-font;
+                color: $color-text;
+                width: 100%;
             }
 
             select {
@@ -148,6 +192,11 @@
                 font-weight: 700;
                 color: $color-light-text;
                 appearance: none;
+                z-index: 5;
+                width: 100%;
+                height: 5rem;
+                background-color: transparent;
+                cursor: pointer;
             }
         }
 
