@@ -1,21 +1,171 @@
 <!DOCTYPE html>
 <html lang="cs">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>App</title>
-    </head>
-    <body>
-        <form class="js-search-form">
-            <input type="text" placeholder="Zadej název" class="js-search-input">
-            <select class="js-category-select">
-                <option value="">Všechny kategorie</option>
-            </select>
-            <select class="js-field-select">
-                <option value="">Všechny oblasti</option>
-            </select>
-            <button>Vyhledej</button>
-        </form>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <title>App</title>
+</head>
+<body>
+<header class="header">
+    <nav class="nav">
+        <div class="maxW">
+            <div class="logo">
+                <img src="assets/imgs/logo.svg" alt="logo">
+                <p class="logo__text">Hledač.<span>io</span></p>
+            </div>
+            <ul class="menu">
+                <li class="menu__item menu__item--selected"><a href="/">Domů</a></li>
+                <li class="menu__item"><a href="#">O projektu</a></li>
+                <li class="menu__item"><a href="#">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="maxW">
+            <div class="flex">
+                <div class="hero-cont">
+                    <h1 class="headline headline--primary mb-2">Úřední deska <span>Královéhradeckého kraje</span></h1>
+                    <p class="text text--big">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras pede
+                        libero.</p>
+                </div>
+                <div class="hero-cont">
+                    <img src="assets/imgs/hero-illustration.svg" alt="Úvodní ilustrace - monitor">
+                </div>
+            </div>
+            <form class="js-search-form">
+                <div class="cont">
+                    <img src="assets/imgs/search.svg" alt="Ikona vyhledávání">
+                    <input type="text" placeholder="Zadej název" class="js-search-input">
+                </div>
+                <div class="cont">
+                    <img src="assets/imgs/kategorie.svg" alt="Ikona kategorie">
+                    <select class="js-category-select">
+                        <option value="">Kategorie</option>
+                    </select>
+                </div>
+                <div class="cont">
+                    <img src="assets/imgs/oblast.svg" alt="Ikona oblasti">
+                    <select class="js-field-select">
+                        <option value="">Oblast</option>
+                    </select>
+                </div>
+                <button class="btn btn--primary">Vyhledej</button>
+            </form>
+        </div>
+    </section>
+</header>
+<main class="main">
+    <section class="main-content">
+        <div class="maxW">
+            <div class="filter">
+                <div class="filter-item">
+                    <h2 class="headline headline--secondary">Kategorie</h2>
+                    <ul class="filter-item-list">
+                        <li class="filter-item-list__item"><a href="#">Lorem ipsum dolor <span>10</span></a></li>
+                        <li class="filter-item-list__item"><a href="#">Lorem ipsum dolor <span>10</span></a></li>
+                        <li class="filter-item-list__item"><a href="#">Lorem ipsum dolor <span>10</span></a></li>
+                        <li class="filter-item-list__item"><a href="#">Lorem ipsum dolor <span>10</span></a></li>
+                    </ul>
+                </div>
+                <div class="filter-item">
+                    <h2 class="headline headline--secondary">Oblasti</h2>
+                    <ul class="filter-item-list">
+                        <li class="filter-item-list__item"><a href="#">Lorem ipsum dolor <span>10</span></a></li>
+                        <li class="filter-item-list__item"><a href="#">Lorem ipsum dolor <span>10</span></a></li>
+                        <li class="filter-item-list__item"><a href="#">Lorem ipsum dolor <span>10</span></a></li>
+                        <li class="filter-item-list__item"><a href="#">Lorem ipsum dolor <span>10</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="results">
+                <div class="results-header">
+                    <h2 class="headline headline--secondary">Nalezeno <span>392</span> výsledků</h2>
+                    <div class="results__filter">
+                        <p class="text text--medium bold"></p>
+                        <div class="results__filter-name">
+                            Názvu
+                            <span>
+                            <img src="assets/imgs/arr-down-primary.svg" alt="Šipka nahoru">
+                            <img src="assets/imgs/arr-down-primary.svg" alt="Šipka dolů">
+                        </span>
+                        </div>
+                        <div class="results__filter-date">
+                            Zveřejnění
+                            <span>
+                            <img src="assets/imgs/arr-down-primary.svg" alt="Šipka nahoru">
+                            <img src="assets/imgs/arr-down-primary.svg" alt="Šipka dolů">
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="results-body">
+                    <div class="result">
+                        <h3 class="result__title mb-2">OM2/97/2020 záměr pronajmout NP č. 503, ulice M.Horákové čp.
+                            504</h3>
+                        <div class="flex mb-2_5">
+                            <div class="cont">
+                                <img src="assets/imgs/result-oblast.svg" class="result__icon"
+                                     alt="Ikona oblasti u výsledku">
+                                <p class="text text--medium ml-1">Majetek obce</p>
+                            </div>
+                            <div class="cont ml-3">
+                                <img src="assets/imgs/result-calendar.svg" class="result__icon"
+                                     alt="Ikona kalendáře u výsledku">
+                                <p class="text text--medium ml-1">19.10.2020</p>
+                            </div>
+                        </div>
+                        <div class="result-categories">
+                            <div class="category">Dopravní značení</div>
+                        </div>
+                        <button class="result__show">Zobrazit výsledek</button>
+                    </div>
+                    <div class="result">
+                        <h3 class="result__title mb-2">OM2/97/2020 záměr pronajmout NP č. 503, ulice M.Horákové čp.
+                            504</h3>
+                        <div class="flex mb-2_5">
+                            <div class="cont">
+                                <img src="assets/imgs/result-oblast.svg" class="result__icon"
+                                     alt="Ikona oblasti u výsledku">
+                                <p class="text text--medium ml-1">Majetek obce</p>
+                            </div>
+                            <div class="cont ml-3">
+                                <img src="assets/imgs/result-calendar.svg" class="result__icon"
+                                     alt="Ikona kalendáře u výsledku">
+                                <p class="text text--medium ml-1">19.10.2020</p>
+                            </div>
+                        </div>
+                        <div class="result-categories">
+                            <div class="category">Dopravní značení</div>
+                        </div>
+                        <button class="result__show">Zobrazit výsledek</button>
+                    </div>
+                    <div class="result">
+                        <h3 class="result__title mb-2">OM2/97/2020 záměr pronajmout NP č. 503, ulice M.Horákové čp.
+                            504</h3>
+                        <div class="flex mb-2_5">
+                            <div class="cont">
+                                <img src="assets/imgs/result-oblast.svg" class="result__icon"
+                                     alt="Ikona oblasti u výsledku">
+                                <p class="text text--medium ml-1">Majetek obce</p>
+                            </div>
+                            <div class="cont ml-3">
+                                <img src="assets/imgs/result-calendar.svg" class="result__icon"
+                                     alt="Ikona kalendáře u výsledku">
+                                <p class="text text--medium ml-1">19.10.2020</p>
+                            </div>
+                        </div>
+                        <div class="result-categories">
+                            <div class="category">Dopravní značení</div>
+                        </div>
+                        <button class="result__show">Zobrazit výsledek</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
 </html>

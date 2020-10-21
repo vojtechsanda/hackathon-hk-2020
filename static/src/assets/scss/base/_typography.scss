@@ -1,0 +1,46 @@
+body {
+    font-family: $base-font;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: $color-text;
+    -moz-osx-font-smoothing: inherit;
+    -webkit-font-smoothing: antialiased;
+}
+
+.headline {
+    font-weight: 700;
+
+    span {
+        color: $color-primary;
+    }
+
+    &--primary {
+        font-size: 3.2rem;
+    }
+
+    &--secondary {
+        font-size: 1.7rem;
+    }
+}
+
+.text {
+
+    font-weight: 600;
+
+    &--big {
+        font-size: 1.8rem;
+
+    }
+
+    &--medium {
+        font-size: 1.4rem;
+    }
+
+}
+
+.btn {
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-family: $base-font;
+    color: white;
+}

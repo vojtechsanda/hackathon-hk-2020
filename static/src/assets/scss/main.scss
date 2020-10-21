@@ -1,1 +1,12 @@
+@import './base/variables.scss';
+@import './base/utility.scss';
+@import './base/typography.scss';
+@import './base/margins.scss';
 @import './base/base.scss';
+
+@import "./elements/buttons.scss";
+
+@import "./globals/header";
+
+@import "./layout/main-content";
+@import "./layout/one-result";
