@@ -19,3 +19,6 @@ if __name__ == "__main__":
 
   KralovehradeckyKraj(DBSession)
   PardubickyKraj(DBSession)
+
+  with engine.connect() as con:
+    rs = con.execute('CREATE FULLTEXT INDEX index_name ON message(title)')
