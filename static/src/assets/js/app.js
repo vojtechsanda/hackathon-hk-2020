@@ -52,7 +52,8 @@ class ResultsController {
         }
     }
     updateRecords(records) {
-        this.state.records = records;
+        this.state.records = Array.from(records);
+        this.render();
     }
     render() {
         resultsView.render(this.state.records);
@@ -133,7 +134,8 @@ class Desk {
 
             const searchedRecords = this.controllers.search.getSearchedRecords(this.state.records);
             this.state.searchedRecords = searchedRecords;
-            console.log(this.state.searchedRecords);
+
+            this.controllers.results.updateRecords(searchedRecords);
         });
     }
     initControllers() {
