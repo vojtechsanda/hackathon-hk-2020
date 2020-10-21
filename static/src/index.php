@@ -120,6 +120,10 @@ $app->route(
       }
     }
 
+    $message_count = $app->get('DB')->exec(
+      'SELECT COUNT(*) FROM message ' . $sql_filters, $sql_params
+    );
+
     if (isset($_GET['limit'])) {
       $sql_params[':limit'] = intval($_GET['limit']);
       $offset = $_GET['offset'];
@@ -132,10 +136,6 @@ $app->route(
 
     $messages = $app->get('DB')->exec(
       'SELECT ' . $sql_variables . $sql_filters . $sql_order . $sql_limit, $sql_params
-    );
-
-    $message_count = $app->get('DB')->exec(
-      'SELECT COUNT(*) FROM message ' . $sql_filters, $sql_params
     );
 
     if (count($message_count) > 0) {
@@ -161,13 +161,18 @@ $app->route(
 $app->route(
   'GET /api/sources',
   function($app) {
-    $sql = "SELECT * FROM source";
+    $sql = "SELECT source.id, source.name, COUNT(message.id) as count
+            FROM source
+            LEFT JOIN message
+            ON message.source_id = source.id";
 
     $params = [];
     if (isset($_GET['region'])) {
       $params[':region'] = $_GET['region'];
-      $sql .= " WHERE region_id = :region";
+      $sql .= " WHERE source.region_id = :region";
     }
+
+    $sql .= " GROUP BY source.id";
 
     $results = $app->get('DB')->exec(
       $sql, $params

@@ -1,12 +1,13 @@
 from utils import download_from_url
 import re
-from structure import Message, Region, Instance
+from structure import Message, Region, Instance, Source
 import datetime
 
 def get_datetime(date_str):
   time = datetime.datetime.strptime(date_str, '%d.%m.%Y')
   return time.strftime('%Y-%m-%d %H:%M:%S')
 
+#TODO FIXNOUT INDEXOVÁNÍ
 class PardubickyKraj:
   def __init__(self, db_session):
     self.db_session = db_session
@@ -27,44 +28,62 @@ class PardubickyKraj:
     data_file = open('data/pardubicky_kraj.xml', encoding="utf-8")
     data = data_file.readlines()
 
+    # Create regex patterns
+    title_pattern = re.compile(r'<h3>(.*)<\/h3>')
+    description_pattern = re.compile(r'<div class=\'itmListAnnot\'>(.*)<\/div>')
+    start_date_pattern = re.compile(r'<strong>Vyvěšeno:<\/strong> (.*)')
+    end_date_pattern = re.compile(r' - (.*)<br\/>')
+    source_pattern = re.compile(r'<div class=\'publicDepartment\'><strong>Vystavil: <\/strong>(.*)<\/div>')
+    attachment_pattern = re.compile(r'<a href=\'(.*)\' alt=')
+
+    sources = []
+
     i = 0
     while i < len(data):
-      name = re.search(r'<h3>(.*)<\/h3>', data[i])
-      while name == None:
+      title = title_pattern.match(data[i])
+      while title == None:
         i += 1
         if (i >= len(data)):
              break
-        name = re.search(r'<h3>(.*)<\/h3>', data[i])
-      if (name != None):
+        title = title_pattern.match(data[i])
+      if (title != None):
         message_obj = Message()
         message_obj.region_id = self.region_id
-        message_obj.title = name.group(1)
+        message_obj.title = title.group(1)
         self.db_session.add(message_obj)
       else:
         continue
       i += 1
-      description = re.search(r'<div class=\'itmListAnnot\'>(.*)<\/div>', data[i])
+      description = description_pattern.match(data[i])
       if (description != None):
         #message_obj
         pass
       else:
         continue
       i += 2
-      start_date = re.search(r'<strong>Vyvěšeno:<\/strong> (.*)', data[i])
+      start_date = start_date_pattern.match(data[i])
       if (start_date != None):
         message_obj.published_datetime = get_datetime(start_date.group(1))
       else:
         continue
       i += 1
-      end_date = re.search(r' - (.*)<br\/>', data[i])
+      end_date = end_date_pattern.match(data[i])
       if (end_date != None):
         message_obj.expired_datetime = get_datetime(end_date.group(1))
       i += 1
-      source = re.search(r'<div class=\'publicDepartment\'><strong>Vystavil: <\/strong>(.*)<\/div>', data[i])
+      source = source_pattern.match(data[i])
       if (source != None):
-        pass
+        source = source.group(1)
+        if source not in sources:
+          source_obj = Source()
+          source_obj.region_id = self.region_id
+          source_obj.name = source
+          self.db_session.add(source_obj)
+          self.db_session.commit()
+          sources[source] = source_obj.id
+        message_obj.source_id = sources.index(source) + 1
       i += 1
-      attachment = re.search(r'<a href=\'(.*)\' alt=', data[i])
+      attachment = attachment_pattern.match(data[i])
       if (attachment != None):
         instance = Instance()
         instance.attachment_url = attachment.group(1)
