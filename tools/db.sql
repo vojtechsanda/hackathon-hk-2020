@@ -16,6 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `category`
+--
+
+LOCK TABLES `category` WRITE;
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (1,'Majetkoprávní'),(2,'Zdravotnictví'),(3,'Životní prostředí'),(4,'Ostatní'),(5,'Nabídka nepotřebného majetku pro PO'),(6,'Volná místa KÚ'),(7,'Ostatní volná místa');
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `domain`
 --
 
@@ -53,7 +78,7 @@ CREATE TABLE `message` (
   `attachment_url` varchar(255) DEFAULT NULL,
   `attachment_filename` varchar(255) DEFAULT NULL,
   `source_id` int(11) DEFAULT NULL,
-  `domain_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
   `published_datetime` datetime DEFAULT NULL,
   `expired_datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -109,4 +134,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-21 16:05:36
+-- Dump completed on 2020-10-21 16:58:48

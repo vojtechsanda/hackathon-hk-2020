@@ -19,7 +19,7 @@ class Message(Base):
     attachment_url = Column(String(255))
     attachment_filename = Column(String(255))
     source_id = Column(Integer)#, ForeignKey('source.id')*/)
-    domain_id = Column(Integer)
+    category_id = Column(Integer)
     published_datetime = Column(DateTime)
     expired_datetime = Column(DateTime)
 
@@ -28,8 +28,8 @@ class Source(Base):
     id = Column(Integer, primary_key=True, unique=True)
     name = Column(String(255))
 
-class Domain(Base):
-    __tablename__ = "domain"
+class Category(Base):
+    __tablename__ = "category"
     id = Column(Integer, primary_key=True, unique=True)
     name = Column(String(255))
 
@@ -74,7 +74,7 @@ def convert_data():
     news = tree.findall('wtd:news', prefix_map)
 
     sources = []
-    domains = []
+    categories = []
 
     for row in tqdm(iterable=news, total=len(news)):
         message_obj = Message()
@@ -96,18 +96,18 @@ def convert_data():
             source_id = None
 
         # Title
-        domain = row.find('.//wtd:category[@name="Úřední deska"]/wtd:category', prefix_map)
-        if (domain != None):
-            domain = domain.attrib['name'].strip()
+        category = row.find('.//wtd:category[@name="Úřední deska"]/wtd:category', prefix_map)
+        if (category != None):
+            category = category.attrib['name'].strip()
 
-            if (domain not in domains):
-                domains.append(domain)
-                domain_obj = Domain()
-                domain_obj.name = domain
-                DBSession.add(domain_obj);
-            domain_id = domains.index(domain) + 1
+            if (category not in categories):
+                categories.append(category)
+                category_obj = Category()
+                category_obj.name = category
+                DBSession.add(category_obj);
+            category_id = categories.index(category) + 1
         else:
-            domain_id = None
+            category_id = None
 
         # Attachment
         urlprefix = row.find('.//wtd:urlprefix', prefix_map).text;
@@ -136,7 +136,7 @@ def convert_data():
 
         message_obj.title = title
         message_obj.source_id = source_id
-        message_obj.domain_id = domain_id
+        message_obj.category_id = category_id
         DBSession.add(message_obj)
     DBSession.commit()
 

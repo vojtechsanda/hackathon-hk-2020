@@ -54,7 +54,7 @@ $app->route(
 );
 
 $app->route(
-  'GET /api/domains',
+  'GET /api/categories',
   function($app) {
     $results = $app->get('DB')->exec(
       "SELECT * FROM domain"
