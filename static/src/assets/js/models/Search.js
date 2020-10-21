@@ -6,7 +6,9 @@ export default class Search {
             records: records,
         };
     }
-    async search(currentRegion, searchedTxt, selectedCategory, selectedSource) {
+    async search(currentRegion, searchedTxt, selectedCategory, selectedSource, sorters, offset = 0) {
+        const limit = 10;
+        
         let query = [];
 
         query.push('region=' + currentRegion);
@@ -21,6 +23,13 @@ export default class Search {
             query.push('txt=' + searchedTxt);
         }
 
+        const activeSorter = sorters.filter(sorter => sorter.sortOrder !== 'none')[0];
+        query.push('orderby=' + activeSorter.sortBy);
+        query.push('dir=' + activeSorter.sortOrder);
+
+        // query.push('limit=' + limit);
+        // query.push('offset=' + offset*limit);
+
         let resp;
 
         try {
@@ -30,8 +39,8 @@ export default class Search {
             return this.state.records;
         }
 
-        const searchedRecords = resp.data;
+        const searchedRecordsObj = resp.data;
 
-        return searchedRecords;
+        return searchedRecordsObj;
     }
 }
