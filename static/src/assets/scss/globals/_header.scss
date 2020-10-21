@@ -3,15 +3,14 @@
     height: 42.5rem;
     background-color: $color-light-grey;
 
-    .maxW {
-        padding-top: 4rem;
-        display: flex;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
     .nav {
+
+        .maxW {
+            padding-top: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
         .logo {
 
@@ -70,6 +69,64 @@
             }
 
         }
+    }
+
+    .hero {
+
+        &__img {
+            width: 38rem;
+        }
+
+        &-cont {
+            &:nth-child(1) {
+                width: 63rem;
+            }
+
+            &:nth-child(2) {
+            }
+        }
+
+        .js-search-form {
+            display: flex;
+            background-color: white;
+            padding: 1.5rem 0;
+            padding-left: 4rem;
+            padding-right: 2rem;
+            border-radius: 0.2rem;
+            align-items: center;
+            justify-content: space-between;
+
+            .cont {
+                display: flex;
+                align-items: center;
+            }
+
+            &__ico {
+            }
+
+            ::placeholder {
+                color: $color-light-text;
+            }
+
+            .js-search-input {
+                border: none;
+                font-size: 1.6rem;
+                font-weight: 700;
+                background: transparent;
+                height: 3rem;
+                outline: none;
+                font-family: $base-font;
+            }
+
+            select {
+                font-family: $base-font;
+                border: none;
+                font-size: 1.6rem;
+                font-weight: 700;
+                color: $color-light-text;
+            }
+        }
+
     }
 
 }

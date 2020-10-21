@@ -23,10 +23,12 @@ class SearchController {
             search: new Search(records),
         };
     }
+
     render(categories, sources) {
         searchView.renderCategoriesSelectOptions(categories);
         searchView.renderSourcesSelectOptions(sources);
     }
+
     getSearchedRecords() {
         const searchedTxt = searchView.getSearchedTxt();
         const selectedCategory = searchView.getCategory();
@@ -36,6 +38,7 @@ class SearchController {
 
         return searchedRecords;
     }
+
     init(categories, sources) {
         this.render(categories, sources);
     }
@@ -52,10 +55,12 @@ class ResultsController {
             results: new Results
         }
     }
+
     updateRecords(records) {
         this.state.records = Array.from(records);
         this.render();
     }
+
     render() {
         const sorters = resultsView.getSorters();
         const sortedRecords = this.state.results.sortBy(this.state.records, sorters);
@@ -73,6 +78,7 @@ class Desk {
         this.state = {};
         this.controllers = {};
     }
+
     async fetchAllRecords() {
         let resp;
 
@@ -87,6 +93,7 @@ class Desk {
 
         return records;
     }
+
     async fetchAllCategories() {
         let resp;
 
@@ -101,6 +108,7 @@ class Desk {
 
         return categories;
     }
+
     async fetchAllSources() {
         let resp;
 
@@ -115,6 +123,7 @@ class Desk {
 
         return sources;
     }
+
     async getAllData() {
         const records = await this.fetchAllRecords();
         if (records === false) return;
@@ -150,6 +159,7 @@ class Desk {
             });
         });
     }
+
     initControllers() {
         this.controllers.search = new SearchController(this.state.records);
         this.controllers.search.init(this.state.categories, this.state.sources);
@@ -157,10 +167,11 @@ class Desk {
         this.controllers.results = new ResultsController(this.state.records);
         this.controllers.results.render();
     }
+
     async init() {
         const fetchedDataStatus = await this.getAllData();
         if (!fetchedDataStatus) {
-            alert('Nějaký zdroj se nenačtl');
+            //alert('Nějaký zdroj se nenačtl');
             return;
         }
 
