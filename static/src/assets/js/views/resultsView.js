@@ -20,9 +20,12 @@ export const render = records => {
     });
 }
 
+export const updateResultsCount = count => {
+    elements.resultsCount.textContent = count;
+}
+
 function formatDate(timestamp) {
     const d = new Date(timestamp);
-    console.log(d);
 
     const formattedTxt = `${d.getMonth()+1}.${d.getDate()}.${d.getFullYear()}`;
     return formattedTxt;

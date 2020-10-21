@@ -4,4 +4,5 @@ export const elements = {
     searchCategorySelect: document.querySelector('.js-category-select'),
     searchFieldSelect: document.querySelector('.js-field-select'),
     resultsWrapper: document.querySelector('.js-results-wrapper'),
+    resultsCount: document.querySelector('.js-results-count'),
 };

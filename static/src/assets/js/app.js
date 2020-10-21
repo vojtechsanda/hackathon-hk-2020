@@ -56,6 +56,7 @@ class ResultsController {
     }
     render() {
         resultsView.render(this.state.records);
+        resultsView.updateResultsCount(this.state.records.length);
     }
 }
 
