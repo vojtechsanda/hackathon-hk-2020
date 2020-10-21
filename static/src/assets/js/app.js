@@ -25,14 +25,23 @@ class SearchController {
     }
     render(categories, sources) {
         searchView.renderCategoriesSelectOptions(categories);
+        searchView.renderCategoriesSide(categories);
         searchView.renderSourcesSelectOptions(sources);
+        searchView.renderSourcesSide(sources);
+    }
+    updateFilter(filterType, filterOptionId) {
+        searchView.updateFilter(filterType, filterOptionId);
     }
     getSearchedRecords() {
         const searchedTxt = searchView.getSearchedTxt();
         const selectedCategory = searchView.getCategory();
         const selectedSource = searchView.getSource();
 
-        const searchedRecords = this.state.search.search(searchedTxt, selectedCategory, selectedSource);
+        const searchedRecords = this.state.search.search(
+            searchedTxt,
+            selectedCategory,
+            selectedSource
+        );
 
         return searchedRecords;
     }
@@ -148,6 +157,25 @@ class Desk {
                 resultsView.handleSorters(sorterWrapper);
                 this.controllers.results.render();
             });
+        });
+
+        elements.searchCategorySide.addEventListener('click', e => {
+            const categoryOption = e.target.closest('[data-option-id]');
+            
+            if (categoryOption) {
+                const categoryId = categoryOption.dataset.optionId;
+                searchView.resetFilters();
+                searchView.updateFilter('category', categoryId);
+            }
+        })
+        elements.searchSourcesSide.addEventListener('click', e => {
+            const sourceOption = e.target.closest('[data-option-id]');
+
+            if (sourceOption) {
+                const sourceId = sourceOption.dataset.optionId;
+                searchView.resetFilters();
+                searchView.updateFilter('source', sourceId);
+            }
         });
     }
     initControllers() {

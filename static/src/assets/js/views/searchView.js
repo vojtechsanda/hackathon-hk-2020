@@ -1,5 +1,6 @@
 import { elements } from './base';
 
+// TODO: Should by DRY
 export const renderCategoriesSelectOptions = categories => {
     let categoriesMarkup = '';
 
@@ -28,6 +29,49 @@ export const renderSourcesSelectOptions = sources => {
         'beforeend',
         sourcesMarkup
     );
+}
+export const resetFilters = () => {
+    elements.searchInput.value = '';
+    elements.searchCategorySelect.value = '';
+    elements.searchSourceSelect.value = '';
+}
+export const updateFilter = (filterType, filterOptionId) => {
+    const filterTypeFirstUpper = filterType.split("")[0].toUpperCase() + filterType.slice(1);
+    elements[`search${filterTypeFirstUpper}Select`].value = filterOptionId;
+}
+export const renderCategoriesSide = categories => {
+    let categoriesMarkup = '';
+
+    categories.forEach((category) => {
+        const optionMarkup = `
+            <li class="filter-item-list__item" title="${category.name}" data-option-id="${category.id}">${cutTxt(category.name, 20)} <span>${category.count}</span></li>
+        `;
+
+        categoriesMarkup += optionMarkup;
+    });
+
+    elements.searchCategorySide.insertAdjacentHTML('beforeend', categoriesMarkup);
+};
+export const renderSourcesSide = sources => {
+    let sourcesMarkup = '';
+
+    sources.forEach((source) => {
+        const optionMarkup = `
+            <li class="filter-item-list__item" title="${source.name}" data-option-id="${source.id}">${cutTxt(source.name, 20)} <span>${source.count}</span></li>
+        `;
+
+        sourcesMarkup += optionMarkup;
+    });
+
+    elements.searchSourcesSide.insertAdjacentHTML('beforeend', sourcesMarkup);
+};
+function cutTxt(txt, charCount) {
+    if (txt.length <= charCount) {
+        return txt;
+    }
+
+    const cutTxt = `${txt.slice(0, charCount)}...`;
+    return cutTxt;
 }
 export const getSearchedTxt = () => {
     const searchedTxt = elements.searchInput.value;

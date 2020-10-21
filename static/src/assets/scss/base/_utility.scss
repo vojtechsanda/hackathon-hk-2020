@@ -1,5 +1,7 @@
 .maxW {
     max-width: 1440px;
+    margin: auto;
+
 }
 
 .flex {
@@ -8,5 +10,9 @@
 
 .bold {
     font-weight: 700;
+}
+
+.space-between {
+    justify-content: space-between;
 }
 
