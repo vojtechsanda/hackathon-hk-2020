@@ -3,6 +3,17 @@
     height: 42.5rem;
     background-color: $color-light-grey;
 
+    @include size(600) {
+        height: 50rem;
+    }
+
+    @include size(450) {
+        height: 56rem;
+    }
+    @include size(350) {
+        height: 60rem;
+    }
+
     .nav {
 
         .maxW {
@@ -37,6 +48,10 @@
             display: flex;
             align-items: center;
             list-style: none;
+
+            @include size(600) {
+                display: none;
+            }
 
             &__item {
 
@@ -73,23 +88,85 @@
 
     .hero {
 
+        position: relative;
+
         &__img {
             width: 38rem;
         }
 
-        .headline--primary {
-            position: relative;
+        &-category {
+            background: white;
+            color: $color-primary;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 1rem 0;
+            padding-left: 3rem;
+            padding-right: 2rem;
+            border-radius: 2rem;
+            display: inline-block;
+            position: absolute;
+            bottom: -8rem;
+            left: 50%;
+            transform: translateX(-50%);
 
-            &::after {
-                position: absolute;
+            &::before {
+
                 content: "";
-                background: rgba($color-text, 0.3);
-                left: 0;
+                background: $color-primary;
+                border-radius: 50%;
+                height: .5rem;
+                width: .5rem;
+                left: 1.5rem;
+                position: absolute;
                 top: 50%;
-                width: 1rem;
-                height: 0.3rem;
-
                 transform: translateY(-50%);
+
+            }
+        }
+
+        &-home {
+            .headline--primary {
+                position: relative;
+
+                &::after {
+                    position: absolute;
+                    content: "";
+                    background: rgba($color-text, 0.3);
+                    left: 0;
+                    top: 50%;
+                    width: 1rem;
+                    height: 0.3rem;
+
+                    transform: translateY(-50%);
+                }
+            }
+        }
+
+        &-page {
+            .headline--primary {
+                width: 68rem;
+                margin: auto;
+
+                @include size(900) {
+                    width: 100%;
+                }
+            }
+        }
+
+        .breadcrumb {
+            display: flex;
+
+            a, span, p {
+                font-size: 1.4rem;
+                font-weight: 700;
+            }
+
+            span {
+                margin: 0 1rem;
+            }
+
+            a {
+                color: $color-primary;
             }
         }
 
