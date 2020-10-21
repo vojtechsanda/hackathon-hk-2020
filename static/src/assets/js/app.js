@@ -124,7 +124,24 @@ class Desk {
 
         return sources;
     }
+    async fetchRegions() {
+        let resp;
+
+        try {
+            resp = await Axios('/api/regions/');
+        } catch {
+            console.error('Nebylo možné načíst regiony');
+            return false;
+        }
+
+        const regions = resp.data;
+
+        return regions;
+    }
     async getAllData() {
+        const regions = await this.fetchRegions();
+        if (regions === false) return;
+
         const records = await this.fetchAllRecords();
         if (records === false) return;
 
@@ -134,11 +151,16 @@ class Desk {
         const sources = await this.fetchAllSources();
         if (sources === false) return;
 
+        this.state.regions = regions;
         this.state.records = records;
         this.state.categories = categories;
         this.state.sources = sources;
 
         return true;
+    }
+
+    setRegion(regionId = 1) {
+        this.state.currentRegion = regionId;
     }
 
     setupEvents() {
@@ -192,6 +214,7 @@ class Desk {
             return;
         }
 
+        this.setRegion(1);
         this.initControllers();
         this.setupEvents();
     }
@@ -199,3 +222,4 @@ class Desk {
 
 const desk = new Desk;
 desk.init();
+console.log(desk);
