@@ -161,13 +161,18 @@ $app->route(
 $app->route(
   'GET /api/sources',
   function($app) {
-    $sql = "SELECT * FROM source";
+    $sql = "SELECT source.id, source.name, COUNT(message.id) as count
+            FROM source
+            LEFT JOIN message
+            ON message.source_id = source.id";
 
     $params = [];
     if (isset($_GET['region'])) {
       $params[':region'] = $_GET['region'];
-      $sql .= " WHERE region_id = :region";
+      $sql .= " WHERE source.region_id = :region";
     }
+
+    $sql .= " GROUP BY source.id";
 
     $results = $app->get('DB')->exec(
       $sql, $params
