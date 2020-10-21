@@ -1,6 +1,6 @@
 from utils import download_from_url
 import re
-from structure import Message, Region
+from structure import Message, Region, Instance
 import datetime
 
 def get_datetime(date_str):
@@ -24,7 +24,7 @@ class PardubickyKraj:
     download_from_url('https://deska.pardubickykraj.cz/desk_print.aspx', 'data/pardubicky_kraj.xml')
 
   def convert(self):
-    data_file = open('data2.html', encoding="utf-8")
+    data_file = open('data/pardubicky_kraj.xml', encoding="utf-8")
     data = data_file.readlines()
 
     i = 0
@@ -62,9 +62,14 @@ class PardubickyKraj:
       i += 1
       source = re.search(r'<div class=\'publicDepartment\'><strong>Vystavil: <\/strong>(.*)<\/div>', data[i])
       if (source != None):
-
+        pass
       i += 1
       attachment = re.search(r'<a href=\'(.*)\' alt=', data[i])
+      if (attachment != None):
+        instance = Instance()
+        instance.attachment_url = attachment.group(1)
+        instance.attachment_filename = 'pdf'
+        message_obj.children.append(instance)
     self.db_session.commit()
 
 
