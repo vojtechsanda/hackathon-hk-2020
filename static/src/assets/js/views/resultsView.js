@@ -31,6 +31,33 @@ export const render = records => {
     });
 }
 
+export const getSorters = () => {
+    const sortersElems = elements.resultSorters;
+    let sorters = [];
+    
+    sortersElems.forEach((sorterEl) => {
+        sorters.push({
+            sortBy: sorterEl.dataset.sortBy,
+            sortOrder: sorterEl.dataset.currentSort,
+        });
+    });
+    
+    return sorters;
+}
+
+export const handleSorters = changedSorter => {
+    const otherSortersElems = elements.resultSorters.filter(sorter => sorter !== changedSorter);
+    otherSortersElems.forEach(elem => {
+        elem.dataset.currentSort = 'none';
+    })
+
+    if (changedSorter.dataset.currentSort === 'asc') {
+        changedSorter.dataset.currentSort = 'desc';
+    } else {
+        changedSorter.dataset.currentSort = 'asc';
+    }
+}
+
 export const updateResultsCount = count => {
     elements.resultsCount.textContent = count;
 }
