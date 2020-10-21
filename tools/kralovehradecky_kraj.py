@@ -1,46 +1,7 @@
-import requests
-import logging
-from tqdm import tqdm
+from utils import download_from_url
 from lxml import etree
-from sqlalchemy import create_engine, MetaData, Table, select
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy_utils import create_database, database_exists
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, Float, String, ForeignKey, DateTime, Text
-from datetime import datetime
-
-Base = declarative_base()
-
-class Source(Base):
-    __tablename__ = "source"
-    id = Column(Integer, primary_key=True, unique=True)
-    name = Column(String(255))
-
-class Category(Base):
-    __tablename__ = "category"
-    id = Column(Integer, primary_key=True, unique=True)
-    name = Column(String(255))
-
-class Message(Base):
-    __tablename__ = "message"
-    id = Column(Integer, primary_key=True, unique=True)
-    title = Column(String(255))
-    body = Column(Text)
-    source_id = Column(Integer, ForeignKey('source.id'))
-    category_id = Column(Integer, ForeignKey('category.id'))
-    published_datetime = Column(DateTime)
-    expired_datetime = Column(DateTime)
-    children = relationship('Instance')
-
-class Instance(Base):
-    __tablename__ = "instance"
-    id = Column(Integer, primary_key=True, unique=True)
-    message_id = Column(Integer, ForeignKey('message.id'))
-    title = Column(String(255))
-    attachment_url = Column(String(255))
-    attachment_filename = Column(String(255))
-
+from structure import Instance, Category, Source, Message, Region
+from tqdm import tqdm
 
 def get_datetime(datetime_obj, prefix):
     date = datetime_obj.find('wtd:date', prefix).text
@@ -48,37 +9,25 @@ def get_datetime(datetime_obj, prefix):
     datetime_str = date + ' ' + time
     return datetime_str
 
-def download_from_url(url, dst, req=None):
-    if req is None:
-        req = requests.get(url, stream=True)
-    file_size = int(req.headers['Content-Length'].strip())
-    pbar = tqdm(
-        total=file_size, initial=0,
-        unit='B', unit_scale=True, desc=url.split('/')[-1])
-    with(open(dst, 'wb')) as f:
-        for chunk in req.iter_content(chunk_size=1024):
-            if chunk:
-                f.write(chunk)
-                pbar.update(1024)
-    pbar.close()
+class KralovehradeckyKraj:
+  def __init__(self, db_session):
+    self.db_session = db_session
 
-def download_data():
-    logging.info('Downloading data...')
-    download_from_url('http://www.kr-kralovehradecky.cz/xml/export/eldeska-zpravy.xml', 'data.xml')
+    region = Region()
+    region.name = 'Královéhradecký kraj'
+    self.db_session.add(region)
+    self.db_session.commit()
+    self.region_id = region.id
 
-def convert_data():
-    url = 'mysql://root:@localhost/hackathon_hk_2020?charset=utf8'
+    self.download()
+    self.convert()
 
-    if not database_exists(url):
-        create_database(url)
 
-    engine = create_engine(url, echo=False, encoding='utf-8')
-    DBSession = scoped_session(sessionmaker())
-    DBSession.configure(bind=engine, autoflush=False, expire_on_commit=False)
-    Base.metadata.drop_all(engine)
-    Base.metadata.create_all(engine)
+  def download(self):
+    download_from_url('http://www.kr-kralovehradecky.cz/xml/export/eldeska-zpravy.xml', 'data/kralovehradecky_kraj.xml')
 
-    tree = etree.parse('data.xml')
+  def convert(self):
+    tree = etree.parse('data/kralovehradecky_kraj.xml')
     prefix_map = {"wtd": "http://www.webtodate.cz/schemas/2.0/SimpleSchema"}
     news = tree.findall('wtd:news', prefix_map)
 
@@ -87,11 +36,12 @@ def convert_data():
 
     null_source = Source()
     null_source.name = 'Neznámý'
-    DBSession.add(null_source)
-    DBSession.commit()
+    self.db_session.add(null_source)
+    self.db_session.commit()
 
     for row in tqdm(iterable=news, total=len(news)):
         message_obj = Message()
+        message_obj.region_id = self.region_id
 
         title = row.find('wtd:title', prefix_map).text.strip()
 
@@ -104,8 +54,8 @@ def convert_data():
                 sources.append(source)
                 source_obj = Source()
                 source_obj.name = source
-                DBSession.add(source_obj)
-                DBSession.commit()
+                self.db_session.add(source_obj)
+                self.db_session.commit()
             source_id = sources.index(source) + 1
         else:
             source_id = 1
@@ -119,8 +69,8 @@ def convert_data():
                 categories.append(category)
                 category_obj = Category()
                 category_obj.name = category
-                DBSession.add(category_obj);
-                DBSession.commit()
+                self.db_session.add(category_obj);
+                self.db_session.commit()
             category_id = categories.index(category) + 1
         else:
             category_id = None
@@ -162,9 +112,5 @@ def convert_data():
         message_obj.title = title
         message_obj.source_id = source_id
         message_obj.category_id = category_id
-        DBSession.add(message_obj)
-    DBSession.commit()
-
-if __name__ == '__main__':
-    #download_data()
-    convert_data()
+        self.db_session.add(message_obj)
+    self.db_session.commit()
