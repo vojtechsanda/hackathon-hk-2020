@@ -14,7 +14,15 @@ $app->route(
   'GET /api/all',
   function($app) {
     $results = $app->get('DB')->exec(
-      "SELECT message.*, source.name as source, domain.name as domain
+      "SELECT
+        message.id,
+        message.title,
+        message.attachment_url,
+        message.attachment_filename,
+        UNIX_TIMESTAMP(message.published_datetime) as published_datetime,
+        UNIX_TIMESTAMP(message.expired_datetime) as expired_datetime,
+        source.name as source,
+        domain.name as domain
        FROM message
        INNER JOIN source
        ON source.id = message.source_id
