@@ -95,11 +95,11 @@ class Desk {
 
         return recordsObj;
     }
-    async fetchAllCategories() {
+    async fetchAllCategories(currentRegion) {
         let resp;
 
         try {
-            resp = await Axios('/api/categories/');
+            resp = await Axios('/api/categories/?region=' + currentRegion);');
         } catch {
             console.error('Nebylo možné kategorie data');
             return false;
@@ -109,11 +109,11 @@ class Desk {
 
         return categories;
     }
-    async fetchAllSources() {
+    async fetchAllSources(currentRegion) {
         let resp;
 
         try {
-            resp = await Axios('/api/sources/');
+            resp = await Axios('/api/sources/?region=' + currentRegion);');
         } catch {
             console.error('Nebylo možné načíst oblasti');
             return false;
