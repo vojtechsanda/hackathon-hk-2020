@@ -3,16 +3,29 @@
     height: 42.5rem;
     background-color: $color-light-grey;
 
-    @include size(600) {
-        height: 50rem;
+    &-home {
+        @include size(1000) {
+            height: 68rem;
+        }
+
+        @include size(700) {
+            height: 80rem;
+        }
     }
 
-    @include size(450) {
-        height: 56rem;
+    &-page {
+        @include size(600) {
+            height: 50rem;
+        }
+
+        @include size(450) {
+            height: 56rem;
+        }
+        @include size(350) {
+            height: 60rem;
+        }
     }
-    @include size(350) {
-        height: 60rem;
-    }
+
 
     .nav {
 
@@ -92,6 +105,30 @@
 
         &__img {
             width: 38rem;
+
+            @include size(1000) {
+                width: 25rem;
+            }
+        }
+
+        &-helper {
+            display: flex;
+            justify-content: space-between;
+
+
+            @include size(1000) {
+                flex-direction: column;
+                align-items: center;
+
+                .hero-cont {
+                    &:nth-child(1) {
+                        order: 1;
+                    }
+
+                    &:nth-child(2) {
+                    }
+                }
+            }
         }
 
         &-category {
@@ -127,6 +164,15 @@
         &-home {
             .headline--primary {
                 position: relative;
+                padding-left: 2.5rem;
+
+                @include size(1100) {
+                    padding-left: 0;
+                }
+
+                @include size(1000) {
+                    text-align: center;
+                }
 
                 &::after {
                     position: absolute;
@@ -136,8 +182,11 @@
                     top: 50%;
                     width: 1rem;
                     height: 0.3rem;
-
                     transform: translateY(-50%);
+
+                    @include size(1100) {
+                        display: none;
+                    }
                 }
             }
         }
@@ -173,6 +222,17 @@
         &-cont {
             &:nth-child(1) {
                 width: 65rem;
+                padding-top: 6rem;
+
+                @include size(1350) {
+                    padding-top: 3rem;
+                }
+
+                @include size(700) {
+                    width: 100%;
+                    text-align: center;
+                }
+
             }
 
             &:nth-child(2) {
@@ -184,11 +244,32 @@
             padding: 1.5rem 0;
             padding-left: 4rem;
             padding-right: 2rem;
+            margin-top: 5.5rem;
             border-radius: 0.2rem;
             display: grid;
             grid-template-columns: 1fr repeat(2, 27rem) min-content;
             box-shadow: 0 3rem 3rem rgba(#808080, 0.05);
             position: relative;
+
+            @include size(1000) {
+                grid-template-columns: 1fr repeat(2, 27rem);
+                grid-template-rows: 1fr 1fr;
+                row-gap: 2rem;
+                margin-top: 8rem;
+            }
+
+            @include size(900) {
+                grid-template-columns: 1fr 27rem;
+            }
+
+            @include size(700) {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            @include size(500) {
+                grid-template-columns: 1fr;
+            }
+
 
             &__drop {
                 position: absolute;
@@ -213,16 +294,96 @@
                 border-top-left-radius: 0.2rem;
             }
 
+            button {
+                @include size(1000) {
+                    grid-column: 3 / 4;
+                    grid-row: 2 / 3;
+                    justify-self: flex-end;
+                }
+
+                @include size(900) {
+                    grid-column: 2 / 3;
+                }
+
+                @include size(700) {
+                    grid-row: 3 / 4;
+                    grid-column: 2 / 3
+                }
+
+                @include size(500) {
+                    grid-row: 4 / 5;
+                    grid-column: 1 / 2;
+                }
+            }
+
             .cont {
                 display: flex;
                 position: relative;
                 align-items: center;
+
+                &:nth-of-type(1) {
+                    @include size(1000) {
+                        grid-column: 1 / 2;
+                    }
+
+                }
+
+                &:nth-of-type(2) {
+                    @include size(900) {
+                        grid-row: 2 / 3;
+                        width: 24rem;
+
+                        select {
+                            padding-left: 4rem;
+                        }
+
+                        &::before {
+                            display: none;
+                        }
+
+                        .js-search-form__ico {
+                            left: 0 !important;
+                        }
+                    }
+                    @include size(700) {
+                        grid-column: 1 / 2;
+                        width: 100%;
+                    }
+
+
+                }
+
+                &:nth-of-type(3) {
+                    @include size(700) {
+                        grid-row: 2 / 3;
+                        grid-column: 2 / 3;
+                    }
+
+                    @include size(500) {
+                        grid-row: 3 / 4;
+                        grid-column: 1 / 2;
+
+                        select {
+                            padding-left: 4rem;
+                        }
+
+                        &::before {
+                            display: none;
+                        }
+
+                        .js-search-form__ico {
+                            left: 0 !important;
+                        }
+                    }
+                }
+
 
                 &:nth-of-type(2), &:nth-of-type(3) {
                     position: relative;
 
                     .js-search-form__ico {
                         left: 3rem;
+
                     }
 
                     &::before {
@@ -274,6 +435,7 @@
                 height: 5rem;
                 background-color: transparent;
                 cursor: pointer;
+
             }
         }
 

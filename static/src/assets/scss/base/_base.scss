@@ -19,12 +19,12 @@ section, .nav {
     padding-left: 15rem;
     padding-right: 15rem;
 
-    @include size(1100) {
+    @include size(1300) {
         padding-left: 7rem;
         padding-right: 7rem;
     }
 
-    @include size(900) {
+    @include size(1100) {
         padding-left: 3rem;
         padding-right: 3rem;
     }
