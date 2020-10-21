@@ -8,6 +8,10 @@ import {elements} from './views/base';
 import * as searchView from './views/searchView';
 import Search from './models/Search';
 
+// Results component
+import * as resultsView from './views/resultsView';
+// import Search from './models/Search';
+
 /**
  * SEARCH controller
  */
@@ -34,6 +38,26 @@ class SearchController {
     }
     init(categories, fields) {
         this.render(categories, fields);
+    }
+}
+
+/**
+ * RESULTS controller
+ */
+
+class ResultsController {
+    constructor(records) {
+        this.state = {
+            records: records
+        }
+    }
+    updateRecords(records) {
+        this.state.records = Array.from(records);
+        this.render();
+    }
+    render() {
+        resultsView.render(this.state.records);
+        resultsView.updateResultsCount(this.state.records.length);
     }
 }
 
@@ -103,19 +127,23 @@ class Desk {
 
         return true;
     }
-    
+
     setupEvents() {
         elements.searchForm.addEventListener('submit', e => {
             e.preventDefault();
 
             const searchedRecords = this.controllers.search.getSearchedRecords(this.state.records);
             this.state.searchedRecords = searchedRecords;
-            console.log(this.state.searchedRecords);
+
+            this.controllers.results.updateRecords(searchedRecords);
         });
     }
     initControllers() {
         this.controllers.search = new SearchController(this.state.records);
         this.controllers.search.init(this.state.categories, this.state.fields);
+
+        this.controllers.results = new ResultsController(this.state.records);
+        this.controllers.results.render();
     }
     async init() {
         const fetchedDataStatus = await this.getAllData();
