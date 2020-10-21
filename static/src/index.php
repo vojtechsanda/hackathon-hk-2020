@@ -42,4 +42,26 @@ $app->route(
   }
 );
 
+$app->route(
+  'GET /api/sources',
+  function($app) {
+    $results = $app->get('DB')->exec(
+      "SELECT * FROM source"
+    );
+    header('Content-type: application/json');
+    echo json_encode($results, JSON_NUMERIC_CHECK);
+  }
+);
+
+$app->route(
+  'GET /api/domains',
+  function($app) {
+    $results = $app->get('DB')->exec(
+      "SELECT * FROM domain"
+    );
+    header('Content-type: application/json');
+    echo json_encode($results, JSON_NUMERIC_CHECK);
+  }
+);
+
 $app->run();
