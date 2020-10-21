@@ -10,7 +10,7 @@ import Search from './models/Search';
 
 // Results component
 import * as resultsView from './views/resultsView';
-import Results from './models/Results';
+// import Results from './models/Results';
 
 /**
  * SEARCH controller
@@ -32,19 +32,20 @@ class SearchController {
     updateFilter(filterType, filterOptionId) {
         searchView.updateFilter(filterType, filterOptionId);
     }
-    async getSearchedRecords(currentRegion) {
+    async getSearchedRecords(currentRegion, sorters) {
         const searchedTxt = searchView.getSearchedTxt();
         const selectedCategory = searchView.getCategory();
         const selectedSource = searchView.getSource();
 
-        const searchedRecords = await this.state.search.search(
+        const searchedRecordsObj = await this.state.search.search(
             currentRegion,
             searchedTxt,
             selectedCategory,
-            selectedSource
+            selectedSource,
+            sorters
         );
 
-        return searchedRecords;
+        return searchedRecordsObj;
     }
     init(categories, sources) {
         this.render(categories, sources);
@@ -56,22 +57,20 @@ class SearchController {
  */
 
 class ResultsController {
-    constructor(records) {
+    constructor(recordsObj) {
         this.state = {
-            records: records,
-            results: new Results
-        }
+            recordsObj: recordsObj,
+            results: new Results(),
+        };
     }
-    updateRecords(records) {
-        this.state.records = Array.from(records);
+    updateRecords(recordsObj) {
+        this.state.recordsObj = recordsObj;
+        this.state.recordsObj.messages = Array.from(this.state.recordsObj.messages);
         this.render();
     }
     render() {
-        const sorters = resultsView.getSorters();
-        const sortedRecords = this.state.results.sortBy(this.state.records, sorters);
-
-        resultsView.render(sortedRecords);
-        resultsView.updateResultsCount(this.state.records.length);
+        resultsView.render(this.state.recordsObj.messages);
+        resultsView.updateResultsCount(this.state.recordsObj.count);
     }
 }
 
@@ -93,9 +92,9 @@ class Desk {
             return false;
         }
 
-        const records = resp.data;
+        const recordsObj = resp.data;
 
-        return records;
+        return recordsObj;
     }
     async fetchAllCategories() {
         let resp;
@@ -143,8 +142,8 @@ class Desk {
         const regions = await this.fetchRegions();
         if (regions === false) return;
 
-        const records = await this.fetchAllRecords(currentRegion);
-        if (records === false) return;
+        const recordsObj = await this.fetchAllRecords(currentRegion);
+        if (recordsObj === false) return;
 
         const categories = await this.fetchAllCategories();
         if (categories === false) return;
@@ -153,7 +152,7 @@ class Desk {
         if (sources === false) return;
 
         this.state.regions = regions;
-        this.state.records = records;
+        this.state.recordsObj = recordsObj;
         this.state.categories = categories;
         this.state.sources = sources;
 
@@ -168,17 +167,23 @@ class Desk {
         elements.searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const searchedRecords = await this.controllers.search.getSearchedRecords(this.state.currentRegion);
-            this.state.searchedRecords = searchedRecords;
+            const sorters = resultsView.getSorters();
+            const searchedRecordsObj = await this.controllers.search.getSearchedRecords(this.state.currentRegion, sorters);
+            this.state.searchedRecords = searchedRecordsObj.messages;
 
-            this.controllers.results.updateRecords(searchedRecords);
+            this.controllers.results.updateRecords(searchedRecordsObj);
         });
 
-        elements.resultSorters.forEach((sorter) => {
-            sorter.addEventListener('click', (e) => {
+        elements.resultSorters.forEach(sorter => {
+            sorter.addEventListener('click', async (e) => {
                 const sorterWrapper = e.target.closest('[data-sort-by][data-current-sort]');
                 resultsView.handleSorters(sorterWrapper);
-                this.controllers.results.render();
+
+                const sorters = resultsView.getSorters();
+                const searchedRecordsObj = await this.controllers.search.getSearchedRecords(this.state.currentRegion, sorters);
+                this.state.searchedRecords = searchedRecordsObj.messages;
+
+                this.controllers.results.updateRecords(searchedRecordsObj);
             });
         });
 
@@ -190,10 +195,11 @@ class Desk {
                 searchView.resetFilters();
                 searchView.updateFilter('category', categoryId);
 
-                const searchedRecords = await this.controllers.search.getSearchedRecords(this.state.currentRegion);
-                this.state.searchedRecords = searchedRecords;
+                const sorters = resultsView.getSorters();
+                const searchedRecordsObj = await this.controllers.search.getSearchedRecords(this.state.currentRegion, sorters);
+                this.state.searchedRecords = searchedRecordsObj.messages;
 
-                this.controllers.results.updateRecords(searchedRecords);
+                this.controllers.results.updateRecords(searchedRecordsObj);
             }
         });
         elements.searchSourcesSide.addEventListener('click', async (e) => {
@@ -204,18 +210,19 @@ class Desk {
                 searchView.resetFilters();
                 searchView.updateFilter('source', sourceId);
 
-                const searchedRecords = await this.controllers.search.getSearchedRecords(this.state.currentRegion);
-                this.state.searchedRecords = searchedRecords;
+                const sorters = resultsView.getSorters();
+                const searchedRecordsObj = await this.controllers.search.getSearchedRecords(this.state.currentRegion, sorters);
+                this.state.searchedRecords = searchedRecordsObj.messages;
 
-                this.controllers.results.updateRecords(searchedRecords);
+                this.controllers.results.updateRecords(searchedRecordsObj);
             }
         });
     }
     initControllers() {
-        this.controllers.search = new SearchController(this.state.records);
+        this.controllers.search = new SearchController(this.state.recordsObj);
         this.controllers.search.init(this.state.categories, this.state.sources);
 
-        this.controllers.results = new ResultsController(this.state.records);
+        this.controllers.results = new ResultsController(this.state.recordsObj);
         this.controllers.results.render();
     }
     async init() {
