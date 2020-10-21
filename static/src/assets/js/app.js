@@ -188,6 +188,11 @@ class Desk {
                 const categoryId = categoryOption.dataset.optionId;
                 searchView.resetFilters();
                 searchView.updateFilter('category', categoryId);
+                
+                const searchedRecords = this.controllers.search.getSearchedRecords(this.state.records);
+                this.state.searchedRecords = searchedRecords;
+
+                this.controllers.results.updateRecords(searchedRecords);
             }
         })
         elements.searchSourcesSide.addEventListener('click', e => {
@@ -197,6 +202,11 @@ class Desk {
                 const sourceId = sourceOption.dataset.optionId;
                 searchView.resetFilters();
                 searchView.updateFilter('source', sourceId);
+                
+                const searchedRecords = this.controllers.search.getSearchedRecords(this.state.records);
+                this.state.searchedRecords = searchedRecords;
+
+                this.controllers.results.updateRecords(searchedRecords);
             }
         });
     }
