@@ -10,7 +10,7 @@ export const render = records => {
         const markup = `
             <div>
                 <h2>${record.title}</h2>
-                <div>${record.field}</div>
+                <div>${record.source}</div>
                 <div>${formatDate(record.start_timestamp)}</div>
                 <div>${record.category}</div>
             </div>

@@ -26,15 +26,17 @@ $app->route(
         message.title,
         message.attachment_url,
         message.attachment_filename,
+        message.source_id,
+        message.category_id,
         UNIX_TIMESTAMP(message.published_datetime) as published_datetime,
         UNIX_TIMESTAMP(message.expired_datetime) as expired_datetime,
         source.name as source,
-        domain.name as domain
+        category.name as category
        FROM message
        INNER JOIN source
        ON source.id = message.source_id
-       INNER JOIN domain
-       ON domain.id = message.domain_id"
+       INNER JOIN category
+       ON category.id = message.category_id"
     );
 
     header('Content-type: application/json');
@@ -54,10 +56,10 @@ $app->route(
 );
 
 $app->route(
-  'GET /api/domains',
+  'GET /api/categories',
   function($app) {
     $results = $app->get('DB')->exec(
-      "SELECT * FROM domain"
+      "SELECT * FROM category"
     );
     header('Content-type: application/json');
     echo json_encode($results, JSON_NUMERIC_CHECK);
