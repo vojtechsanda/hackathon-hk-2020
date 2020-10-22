@@ -14,14 +14,14 @@ export const elements = {
     regionSelect: document.querySelector('.js-region-select'),
 };
 
-export const renderRegionsSelect = (regions, selectedRegion) => {
+export const renderRegionsSelect = (regions, selectedRegionId) => {
     let markup = '';
 
     Array.from(elements.regionSelect.children).forEach(child => child.parentElement.removeChild(child));
 
     regions.forEach(region => {
         const optionMarkup = `
-            <option value="${region.id}">${region.name}</option>
+            <option value="${region.id}"${region.id === selectedRegionId ? ' selected' : ''}>${region.name}</option>
         `;
 
         markup += optionMarkup;
