@@ -92,6 +92,7 @@ class PardubickyKraj:
       attachment = attachment_pattern.match(data[i])
       if (attachment != None):
         instance = Instance()
+        instance.title = 'Příloha'
         instance.attachment_url = attachment.group(1)
         instance.attachment_filename = 'pdf'
         message_obj.children.append(instance)
