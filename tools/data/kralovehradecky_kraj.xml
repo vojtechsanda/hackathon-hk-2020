@@ -2,7 +2,7 @@
 <wtd:collection xmlns:wtd="http://www.webtodate.cz/schemas/2.0/SimpleSchema" xmlns:wtdvar="http://www.webtodate.cz/schemas/2.0/VarSchema">
 <wtd:exported>
 	<wtd:date>2020-10-22</wtd:date>
-	<wtd:time>10:30:02</wtd:time>
+	<wtd:time>10:50:01</wtd:time>
 </wtd:exported>
 <wtd:news>
 <wtd:origin id="317947" ids="317947" vid="1"/>
@@ -495,6 +495,76 @@
 </wtd:instances>
 </wtd:news>
 <wtd:news>
+<wtd:origin id="322721" ids="322721" vid="1"/>
+<wtd:status>published</wtd:status>
+<wtd:locked>no</wtd:locked>
+<wtd:newstype>news</wtd:newstype>
+<wtd:title>Záměr č. 89/2020 - darování nemovitosti v k.ú. Opočno pod Orlickými horami a obci Opočno</wtd:title>
+<wtd:dynamic_br>yes</wtd:dynamic_br>
+<wtd:source>Odbor organizační a právní</wtd:source>
+<wtd:categories>
+	<wtd:category name="KHKRAJ" locname="Úvodní stránka" >
+		<wtd:category name="Krajský úřad" locname="Krajský úřad" >
+			<wtd:category name="Úřední deska" locname="Úřední deska (vše)" >
+				<wtd:category name="Majetkoprávní" locname="Majetkoprávní oblast" default="yes"/>
+			</wtd:category>
+		</wtd:category>
+	</wtd:category>
+</wtd:categories>
+<wtd:publication>-KHKRAJ</wtd:publication>
+<wtd:language locale="CZ">čeština</wtd:language>
+<wtd:pattern id="-1">publicationrelated</wtd:pattern>
+<wtd:team id="15">Úřední deska</wtd:team>
+<wtd:user id="252">
+	<wtd:firstname>Olga</wtd:firstname>
+	<wtd:lastname>Jiroutová</wtd:lastname>
+</wtd:user>
+<wtd:datenews>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>10:45:43</wtd:time>
+</wtd:datenews>
+<wtd:datepublished>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>00:00:00</wtd:time>
+</wtd:datepublished>
+<wtd:url>/cz/krajsky-urad/uredni-deska/majetek/zamer-c--89-2020---darovani-nemovitosti-v-k-u--opocno-pod-orlickymi-horami-a-obci-opocno-322721/</wtd:url>
+<wtd:instances>
+<wtd:assetsfolder>assets</wtd:assetsfolder>
+<wtd:urlprefix>http://www.kr-kralovehradecky.cz</wtd:urlprefix>
+<wtd:instance id="316241" assetid="322722" list="Přílohy ke stažení" default="yes">
+<wtd:status>published</wtd:status>
+<wtd:locked>no</wtd:locked>
+<wtd:title>Záměr č. 89/2020 - darování nemovitosti v k.ú. Opočno pod Orlickými horami a obci Opočno</wtd:title>
+<wtd:source>Odbor organizační a právní</wtd:source>
+<wtd:categories>
+	<wtd:category name="KHKRAJ" locname="Úvodní stránka" >
+		<wtd:category name="Krajský úřad" locname="Krajský úřad" >
+			<wtd:category name="Úřední deska" locname="Úřední deska (vše)" >
+				<wtd:category name="Majetkoprávní" locname="Majetkoprávní oblast" default="yes"/>
+			</wtd:category>
+		</wtd:category>
+	</wtd:category>
+</wtd:categories>
+<wtd:publication>-KHKRAJ</wtd:publication>
+<wtd:language locale="CZ">čeština</wtd:language>
+<wtd:datenews>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>10:48:37</wtd:time>
+</wtd:datenews>
+<wtd:url>/scripts/detail.php?id=322722</wtd:url>
+<wtd:attachments>
+	<wtd:attachment id="319871">
+		<wtd:filename>zamer-89_1.pdf</wtd:filename>
+		<wtd:filepath>/krajsky-urad/uredni-deska/majetek/</wtd:filepath>
+		<wtd:targetlocation>public</wtd:targetlocation>
+		<wtd:filetype>pdf</wtd:filetype>
+		<wtd:filesize>97519</wtd:filesize>
+					</wtd:attachment>
+</wtd:attachments>
+</wtd:instance>
+</wtd:instances>
+</wtd:news>
+<wtd:news>
 <wtd:origin id="322327" ids="322327" vid="1"/>
 <wtd:status>published</wtd:status>
 <wtd:locked>no</wtd:locked>
@@ -629,6 +699,146 @@
 		<wtd:targetlocation>public</wtd:targetlocation>
 		<wtd:filetype>pdf</wtd:filetype>
 		<wtd:filesize>85597</wtd:filesize>
+					</wtd:attachment>
+</wtd:attachments>
+</wtd:instance>
+</wtd:instances>
+</wtd:news>
+<wtd:news>
+<wtd:origin id="322719" ids="322719" vid="1"/>
+<wtd:status>published</wtd:status>
+<wtd:locked>no</wtd:locked>
+<wtd:newstype>news</wtd:newstype>
+<wtd:title>Záměr č. 88/2020 - prodej nemovitosti v k.ú. Kounov u Dobrušky a obci Kounov</wtd:title>
+<wtd:dynamic_br>yes</wtd:dynamic_br>
+<wtd:source>Odbor organizační a právní</wtd:source>
+<wtd:categories>
+	<wtd:category name="KHKRAJ" locname="Úvodní stránka" >
+		<wtd:category name="Krajský úřad" locname="Krajský úřad" >
+			<wtd:category name="Úřední deska" locname="Úřední deska (vše)" >
+				<wtd:category name="Majetkoprávní" locname="Majetkoprávní oblast" default="yes"/>
+			</wtd:category>
+		</wtd:category>
+	</wtd:category>
+</wtd:categories>
+<wtd:publication>-KHKRAJ</wtd:publication>
+<wtd:language locale="CZ">čeština</wtd:language>
+<wtd:pattern id="-1">publicationrelated</wtd:pattern>
+<wtd:team id="15">Úřední deska</wtd:team>
+<wtd:user id="252">
+	<wtd:firstname>Olga</wtd:firstname>
+	<wtd:lastname>Jiroutová</wtd:lastname>
+</wtd:user>
+<wtd:datenews>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>10:41:48</wtd:time>
+</wtd:datenews>
+<wtd:datepublished>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>00:00:00</wtd:time>
+</wtd:datepublished>
+<wtd:url>/cz/krajsky-urad/uredni-deska/majetek/zamer-c--88-2020---prodej-nemovitosti-v-k-u--kounov-u-dobrusky-a-obci-kounov-322719/</wtd:url>
+<wtd:instances>
+<wtd:assetsfolder>assets</wtd:assetsfolder>
+<wtd:urlprefix>http://www.kr-kralovehradecky.cz</wtd:urlprefix>
+<wtd:instance id="316240" assetid="322720" list="Přílohy ke stažení" default="yes">
+<wtd:status>published</wtd:status>
+<wtd:locked>no</wtd:locked>
+<wtd:title>Záměr č. 88/2020 - prodej nemovitosti v k.ú. Kounov u Dobrušky a obci Kounov</wtd:title>
+<wtd:source>Odbor organizační a právní</wtd:source>
+<wtd:categories>
+	<wtd:category name="KHKRAJ" locname="Úvodní stránka" >
+		<wtd:category name="Krajský úřad" locname="Krajský úřad" >
+			<wtd:category name="Úřední deska" locname="Úřední deska (vše)" >
+				<wtd:category name="Majetkoprávní" locname="Majetkoprávní oblast" default="yes"/>
+			</wtd:category>
+		</wtd:category>
+	</wtd:category>
+</wtd:categories>
+<wtd:publication>-KHKRAJ</wtd:publication>
+<wtd:language locale="CZ">čeština</wtd:language>
+<wtd:datenews>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>10:44:36</wtd:time>
+</wtd:datenews>
+<wtd:url>/scripts/detail.php?id=322720</wtd:url>
+<wtd:attachments>
+	<wtd:attachment id="319870">
+		<wtd:filename>zamer-88_2.pdf</wtd:filename>
+		<wtd:filepath>/krajsky-urad/uredni-deska/majetek/</wtd:filepath>
+		<wtd:targetlocation>public</wtd:targetlocation>
+		<wtd:filetype>pdf</wtd:filetype>
+		<wtd:filesize>95009</wtd:filesize>
+					</wtd:attachment>
+</wtd:attachments>
+</wtd:instance>
+</wtd:instances>
+</wtd:news>
+<wtd:news>
+<wtd:origin id="322717" ids="322717" vid="1"/>
+<wtd:status>published</wtd:status>
+<wtd:locked>no</wtd:locked>
+<wtd:newstype>news</wtd:newstype>
+<wtd:title>Záměr č. 87/2020 - prodej nenovitosti v k.ú. Hubálov a obci Jičín</wtd:title>
+<wtd:dynamic_br>yes</wtd:dynamic_br>
+<wtd:source>Odbor organizační a právní</wtd:source>
+<wtd:categories>
+	<wtd:category name="KHKRAJ" locname="Úvodní stránka" >
+		<wtd:category name="Krajský úřad" locname="Krajský úřad" >
+			<wtd:category name="Úřední deska" locname="Úřední deska (vše)" >
+				<wtd:category name="Majetkoprávní" locname="Majetkoprávní oblast" default="yes"/>
+			</wtd:category>
+		</wtd:category>
+	</wtd:category>
+</wtd:categories>
+<wtd:publication>-KHKRAJ</wtd:publication>
+<wtd:language locale="CZ">čeština</wtd:language>
+<wtd:pattern id="-1">publicationrelated</wtd:pattern>
+<wtd:team id="15">Úřední deska</wtd:team>
+<wtd:user id="252">
+	<wtd:firstname>Olga</wtd:firstname>
+	<wtd:lastname>Jiroutová</wtd:lastname>
+</wtd:user>
+<wtd:datenews>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>10:37:45</wtd:time>
+</wtd:datenews>
+<wtd:datepublished>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>00:00:00</wtd:time>
+</wtd:datepublished>
+<wtd:url>/cz/krajsky-urad/uredni-deska/majetek/zamer-c--87-2020---prodej-nenovitosti-v-k-u--hubalov-a-obci-jicin-322717/</wtd:url>
+<wtd:instances>
+<wtd:assetsfolder>assets</wtd:assetsfolder>
+<wtd:urlprefix>http://www.kr-kralovehradecky.cz</wtd:urlprefix>
+<wtd:instance id="316239" assetid="322718" list="Přílohy ke stažení" default="yes">
+<wtd:status>published</wtd:status>
+<wtd:locked>no</wtd:locked>
+<wtd:title>Záměr č. 87/2020 - prodej nenovitosti v k.ú. Hubálov a obci Jičín</wtd:title>
+<wtd:source>Odbor organizační a právní</wtd:source>
+<wtd:categories>
+	<wtd:category name="KHKRAJ" locname="Úvodní stránka" >
+		<wtd:category name="Krajský úřad" locname="Krajský úřad" >
+			<wtd:category name="Úřední deska" locname="Úřední deska (vše)" >
+				<wtd:category name="Majetkoprávní" locname="Majetkoprávní oblast" default="yes"/>
+			</wtd:category>
+		</wtd:category>
+	</wtd:category>
+</wtd:categories>
+<wtd:publication>-KHKRAJ</wtd:publication>
+<wtd:language locale="CZ">čeština</wtd:language>
+<wtd:datenews>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>10:40:57</wtd:time>
+</wtd:datenews>
+<wtd:url>/scripts/detail.php?id=322718</wtd:url>
+<wtd:attachments>
+	<wtd:attachment id="319869">
+		<wtd:filename>zamer-87_2.pdf</wtd:filename>
+		<wtd:filepath>/krajsky-urad/uredni-deska/majetek/</wtd:filepath>
+		<wtd:targetlocation>public</wtd:targetlocation>
+		<wtd:filetype>pdf</wtd:filetype>
+		<wtd:filesize>95114</wtd:filesize>
 					</wtd:attachment>
 </wtd:attachments>
 </wtd:instance>
