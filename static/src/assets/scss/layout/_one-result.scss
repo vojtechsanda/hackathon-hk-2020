@@ -18,12 +18,21 @@
             align-items: center;
             justify-content: space-between;
 
+
+            @include size(500) {
+                padding: 1.5rem;
+            }
+
             .col {
                 font-size: 1.4rem;
 
                 &:nth-child(1) {
                     font-weight: 700;
                     padding-right: 20rem;
+
+                    @include size(500) {
+                        padding-right: 10rem;
+                    }
                 }
 
                 &:nth-child(2) {
@@ -39,6 +48,10 @@
 
                     &:nth-child(1) {
                         margin-bottom: 2rem;
+                    }
+
+                    &:nth-child(2) {
+                        word-break: break-all;
                     }
                 }
             }

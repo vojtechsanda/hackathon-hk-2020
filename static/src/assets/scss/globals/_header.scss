@@ -19,26 +19,30 @@
 
     &-page {
 
-        @include size(600) {
-            height: 50rem;
+        height: auto !important;
 
+        @include size(600) {
 
             .headline--primary {
                 padding-top: 5rem !important;
             }
-        }
 
-        @include size(500) {
-            height: 55rem;
-        }
+            .nav {
+                .maxW {
+                    padding-bottom: 5rem;
+                }
+            }
 
-        @include size(400) {
-            height: 60rem;
         }
-
 
         .headline--primary {
             padding-top: 3rem;
+        }
+
+        .maxW {
+            display: grid;
+            grid-auto-rows: min-content;
+            padding-bottom: 10rem;
         }
     }
 
@@ -131,6 +135,11 @@
             display: flex;
             justify-content: space-between;
 
+
+            @include size(1050) {
+                text-align: center;
+            }
+
             .area-switcher {
 
                 position: relative;
@@ -161,8 +170,10 @@
                     outline: none;
                     line-height: 44px;
 
+
                     @include size(500) {
                         width: 100%;
+                        font-size: 2.2rem;
                     }
 
                 }
@@ -173,6 +184,10 @@
                     top: 55%;
                     width: 1.5rem;
                     transform: translateY(-50%);
+
+                    @include size(500) {
+                        width: 1.3rem;
+                    }
 
 
                 }
@@ -207,22 +222,9 @@
             border-radius: 2rem;
             display: inline-block;
             position: absolute;
-            top: 21rem;
+            bottom: 2.5rem;
             left: 50%;
             transform: translateX(-50%);
-
-            @include size(600) {
-                top: 28rem;
-            }
-
-            @include size(500) {
-                top: 33rem;
-            }
-
-
-            @include size(400) {
-                top: 39rem;
-            }
 
             &::before {
 
@@ -250,7 +252,7 @@
                 }
 
                 @include size(1050) {
-                    padding-left: 2rem;
+                    padding-left: 4rem;
 
                 }
 
@@ -288,6 +290,7 @@
 
                 @include size(900) {
                     width: 100%;
+                    word-break: break-all;
                 }
             }
         }
@@ -364,7 +367,6 @@
                 padding-left: 2rem;
 
             }
-
 
             &__drop {
                 position: absolute;
