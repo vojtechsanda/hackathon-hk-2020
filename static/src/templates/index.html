@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700&display=swap" rel="stylesheet">
-    <title>App</title>
+    <title>E-Desky.cz</title>
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/imgs/logo.png">
 </head>
 <body>
 <header class="header header-home">
@@ -34,8 +35,7 @@
                             <img src="../assets/imgs/arr-down-primary.svg" alt="">
                         </div>
                     </h1>
-                    <p class="text text--big c-text-light">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        Cras pede libero.</p>
+                    <p class="text text--big c-text-light">Jednoduše přístupná úřední deska s filtrováním výsledků.</p>
                 </div>
                 <div class="hero-cont">
                     <img src="../assets/imgs/hero-illustration.svg" class="hero__img" alt="Úvodní ilustrace - monitor">
@@ -89,20 +89,21 @@
                     <div class="results__filter">
                         <p class="text text--medium bold mr-2">Seřadit podle:</p>
                         <div class="results__filter-item js-results-sort-by" data-sort-by="title"
-                             data-current-sort="none">
+                             data-current-sort="none" data-sort-opacity="bottom">
                             Názvu
                             <span class="results__filter-item__icons">
-                                <img data-sort-opacity="opacity" src="../assets/imgs/arr-down-primary.svg"
+                                <img src="../assets/imgs/arr-down-primary.svg"
                                      alt="Šipka nahoru">
-                                <img data-sort-opacity="opacity" src="../assets/imgs/arr-down-primary.svg"
+                                <img src="../assets/imgs/arr-down-primary.svg"
                                      alt="Šipka dolů">
                             </span>
                         </div>
-                        <div class="results__filter-item js-results-sort-by" data-sort-by="published_datetime"
+                        <div class="results__filter-item js-results-sort-by" data-sort-opacity="bottom"
+                             data-sort-by="published_datetime"
                              data-current-sort="desc">
                             Zveřejnění
                             <span class="results__filter-item__icons">
-                                <img data-sort-opacity="opacity" src="../assets/imgs/arr-down-primary.svg"
+                                <img src="../assets/imgs/arr-down-primary.svg"
                                      alt="Šipka nahoru">
                                 <img src="../assets/imgs/arr-down-primary.svg"
                                      alt="Šipka dolů">

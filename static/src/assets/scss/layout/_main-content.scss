@@ -160,6 +160,22 @@
                 font-size: 1.4rem;
                 cursor: pointer;
 
+                &[data-sort-opacity="top"] {
+                    img {
+                        &:nth-child(2) {
+                            opacity: .3;
+                        }
+                    }
+                }
+
+                &[data-sort-opacity="bottom"] {
+                    img {
+                        &:nth-child(1) {
+                            opacity: .3;
+                        }
+                    }
+                }
+
                 &__icons {
                     display: flex;
                     flex-direction: column;
@@ -176,9 +192,6 @@
                             transform: rotate(180deg);
                         }
 
-                        &[data-sort-opacity="opacity"] {
-                            opacity: .3;
-                        }
 
                     }
                 }
