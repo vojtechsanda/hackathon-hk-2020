@@ -242,6 +242,8 @@ class Desk {
                 this.state.searchedRecords = searchedRecordsObj.messages;
 
                 this.controllers.results.updateRecords(searchedRecordsObj);
+
+                this.updateUrl();
             }
         });
         elements.searchSourcesSide.addEventListener('click', async (e) => {
@@ -257,6 +259,8 @@ class Desk {
                 this.state.searchedRecords = searchedRecordsObj.messages;
 
                 this.controllers.results.updateRecords(searchedRecordsObj);
+
+                this.updateUrl();
             }
         });
         elements.regionSelect.addEventListener('change', e => {
