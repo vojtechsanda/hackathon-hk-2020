@@ -7,7 +7,6 @@ def get_datetime(date_str):
   time = datetime.datetime.strptime(date_str, '%d.%m.%Y')
   return time.strftime('%Y-%m-%d %H:%M:%S')
 
-#TODO FIXNOUT INDEXOVÁNÍ
 class PardubickyKraj:
   def __init__(self, db_session):
     self.db_session = db_session
@@ -36,7 +35,7 @@ class PardubickyKraj:
     source_pattern = re.compile(r'<div class=\'publicDepartment\'><strong>Vystavil: <\/strong>(.*)<\/div>')
     attachment_pattern = re.compile(r'<a href=\'(.*)\' alt=')
 
-    sources = []
+    sources = dict()
 
     i = 0
     while i < len(data):
@@ -81,7 +80,7 @@ class PardubickyKraj:
           self.db_session.add(source_obj)
           self.db_session.commit()
           sources[source] = source_obj.id
-        message_obj.source_id = sources.index(source) + 1
+        message_obj.source_id = sources[source]
       i += 1
       attachment = attachment_pattern.match(data[i])
       if (attachment != None):
