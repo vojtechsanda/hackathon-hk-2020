@@ -19,8 +19,8 @@ import * as resultsView from './views/resultsView';
 class SearchController {
     constructor() {
         this.state = {
-            search: new Search,
-            offset: 0
+            search: new Search(),
+            offset: 0,
         };
     }
     render(categories, sources) {
@@ -32,7 +32,11 @@ class SearchController {
     updateFilter(filterType, filterOptionId) {
         searchView.updateFilter(filterType, filterOptionId);
     }
-    async getSearchedRecords(currentRegion, sorters) {
+    async getSearchedRecords(currentRegion, sorters, resetOffset = true) {
+        if (resetOffset) {
+            this.state.offset = 0;
+        }
+
         const searchedTxt = searchView.getSearchedTxt();
         const selectedCategory = searchView.getCategory();
         const selectedSource = searchView.getSource();
@@ -46,10 +50,14 @@ class SearchController {
             this.state.offset
         );
 
+        this.state.offset++;
+
         return searchedRecordsObj;
     }
-    async searchAnother() {
+    async searchNext(currentRegion, sorters) {
+        const newResults = this.getSearchedRecords(currentRegion, sorters, false);
 
+        return newResults;
     }
     init(categories, sources) {
         this.render(categories, sources);
@@ -220,6 +228,14 @@ class Desk {
             const newRegionId = e.target.value;
             this.state.currentRegion = newRegionId;
             this.updateRegion();
+        });
+        document.getElementById('ASD').addEventListener('click', async () => {
+            const sorters = resultsView.getSorters();
+            const nextSearch = await this.controllers.search.searchNext(this.state.currentRegion, sorters);
+
+            this.state.recordsObj.messages = [...this.state.recordsObj.messages, ...nextSearch.messages];
+
+            this.controllers.results.updateRecords(this.state.recordsObj);
         })
     }
     initControllers() {
