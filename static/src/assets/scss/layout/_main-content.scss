@@ -1,7 +1,19 @@
+.main-home {
+    margin-top: 10rem;
+
+    @include size(1000) {
+        margin-top: 5rem;
+    }
+}
+
 .main-content {
 
     .maxW {
         display: flex;
+
+        @include size(1000) {
+            flex-direction: column;
+        }
     }
 
     .filter {

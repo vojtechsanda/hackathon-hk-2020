@@ -4,12 +4,16 @@
     background-color: $color-light-grey;
 
     &-home {
-        @include size(1000) {
+        @include size(1050) {
             height: 68rem;
         }
 
         @include size(700) {
             height: 80rem;
+        }
+
+        @include size(400) {
+            height: 94rem;
         }
     }
 
@@ -115,8 +119,55 @@
             display: flex;
             justify-content: space-between;
 
+            .area-switcher {
 
-            @include size(1000) {
+                position: relative;
+                padding-left: 1rem;
+
+                @include size(700) {
+                    width: 30rem;
+                    margin: auto;
+                    padding-left: 0;
+                }
+
+
+                select {
+                    color: $color-primary;
+                    font-family: $base-font;
+                    font-size: 3.2rem;
+                    border: none;
+                    font-weight: 700;
+                    background-color: transparent;
+                    appearance: none;
+                    display: inline-block;
+                    cursor: pointer;
+                    padding-right: 2.5rem;
+                    outline: none;
+
+
+                    @include size(400) {
+                        padding-right: 5rem;
+                        width: 100%;
+
+                    }
+
+                }
+
+                img {
+                    position: absolute;
+                    right: 0;
+                    top: 55%;
+                    width: 1.5rem;
+                    transform: translateY(-50%);
+
+
+                }
+
+
+            }
+
+
+            @include size(1050) {
                 flex-direction: column;
                 align-items: center;
 
@@ -165,14 +216,22 @@
             .headline--primary {
                 position: relative;
                 padding-left: 2.5rem;
+                display: flex;
 
                 @include size(1100) {
                     padding-left: 0;
                 }
 
-                @include size(1000) {
-                    text-align: center;
+                @include size(1050) {
+                    padding-left: 2rem;
+
                 }
+
+                @include size(700) {
+                    flex-direction: column;
+
+                }
+
 
                 &::after {
                     position: absolute;
@@ -270,11 +329,22 @@
                 grid-template-columns: 1fr;
             }
 
+            @include size(400) {
+                padding-left: 2rem;
+
+            }
+
 
             &__drop {
                 position: absolute;
                 right: 3rem;
                 width: 1.4rem;
+
+
+                @include size(400) {
+                    right: 0rem;
+
+                }
             }
 
             &-name {
@@ -420,6 +490,7 @@
                 font-family: $base-font;
                 color: $color-text;
                 width: 100%;
+
             }
 
             select {
@@ -428,6 +499,7 @@
                 border: none;
                 font-size: 1.6rem;
                 font-weight: 700;
+                padding-right: 5.5rem;
                 color: $color-light-text;
                 appearance: none;
                 z-index: 5;
