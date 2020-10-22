@@ -56,8 +56,9 @@ class MoravskoslezkyKraj:
 
         # Attachments
         attachments = row.findall('dokument')
-        for attachment in attachments:
+        for index, attachment in enumerate(attachments):
           instance = Instance()
+          instance.title = 'Příloha č. ' + str(index + 1)
           instance.attachment_url = attachment.text
           instance.attachment_filename = 'pdf'
           message_obj.children.append(instance)
