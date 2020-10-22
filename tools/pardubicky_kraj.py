@@ -1,6 +1,6 @@
 from utils import download_from_url
 import re
-from structure import Message, Region, Instance, Source
+from structure import Message, Region, Instance, Source, Category
 import datetime
 
 def get_datetime(date_str):
@@ -37,6 +37,12 @@ class PardubickyKraj:
 
     sources = dict()
 
+    default_category = Category()
+    default_category.name = 'Ostatní'
+    default_category.region_id = self.region_id
+    self.db_session.add(default_category)
+    self.db_session.commit()
+
     i = 0
     while i < len(data):
       title = title_pattern.match(data[i])
@@ -49,6 +55,7 @@ class PardubickyKraj:
         message_obj = Message()
         message_obj.region_id = self.region_id
         message_obj.title = title.group(1)
+        message_obj.category_id = default_category.id
         self.db_session.add(message_obj)
       else:
         continue
