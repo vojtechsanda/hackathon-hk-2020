@@ -159,7 +159,6 @@
                     cursor: pointer;
                     padding-right: 2.5rem;
                     outline: none;
-                    height: 4.4rem;
 
                     @include size(500) {
                         width: 100%;
@@ -244,6 +243,7 @@
                 position: relative;
                 padding-left: 2.5rem;
                 display: flex;
+                align-items: center;
 
                 @include size(1100) {
                     padding-left: 0;
