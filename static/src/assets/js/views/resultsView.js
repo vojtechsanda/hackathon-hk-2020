@@ -9,7 +9,7 @@ export const render = records => {
     records.forEach(record => {
         const markup = `
             <div class="result">
-                <a href="#" class="result__title mb-2">${record.title}</a>
+                <a href="/detail/?id=${record.id}" class="result__title mb-2">${record.title}</a>
                 <div class="flex mb-2_5">
                     <div class="cont">
                         <img src="assets/imgs/result-user.svg" class="result__icon" alt="Ikona oblasti u výsledku">
