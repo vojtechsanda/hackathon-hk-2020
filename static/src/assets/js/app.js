@@ -229,13 +229,24 @@ class Desk {
             this.state.currentRegion = newRegionId;
             this.updateRegion();
         });
-        document.getElementById('ASD').addEventListener('click', async () => {
-            const sorters = resultsView.getSorters();
-            const nextSearch = await this.controllers.search.searchNext(this.state.currentRegion, sorters);
+        window.addEventListener('scroll', async e => {
+            const fifthItem = resultsView.getFifthResult();
+            
+            const bottomOffset = (fifthItem.offsetBottom = window.innerHeight - (fifthItem.offsetTop + fifthItem.offsetHeight))*(-1);
 
-            this.state.recordsObj.messages = [...this.state.recordsObj.messages, ...nextSearch.messages];
+            if ((!this.state.lockSearchNext && bottomOffset < window.scrollY)) {
+                this.state.lockSearchNext = true;
+                
+                const sorters = resultsView.getSorters();
+                const nextSearch = await this.controllers.search.searchNext(this.state.currentRegion, sorters);
+    
+                this.state.recordsObj.messages = [...this.state.recordsObj.messages, ...nextSearch.messages];
+    
+                this.controllers.results.updateRecords(this.state.recordsObj);
 
-            this.controllers.results.updateRecords(this.state.recordsObj);
+                this.state.lockSearchNext = false;
+            }
+            
         })
     }
     initControllers() {
