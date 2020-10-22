@@ -291,7 +291,7 @@ class Desk {
         this.controllers.results = new ResultsController;
     }
     async init() {
-        this.setRegion(1);
+        this.setRegion(getHashParam('region') || 1);
 
         const fetchedDataStatus = await this.getAllData(
             this.state.currentRegion
