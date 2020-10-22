@@ -85,7 +85,7 @@ class Desk {
         let resp;
 
         try {
-            resp = await Axios('/api/search/?region=' + currentRegion);
+            resp = await Axios('/api/search/?limit=10&offset=0&orderby=published_datetime&dir=desc&region=' + currentRegion);
         } catch {
             console.error('Nebylo možné načíst data');
             return false;

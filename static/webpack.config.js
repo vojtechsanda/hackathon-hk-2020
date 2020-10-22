@@ -6,6 +6,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         app: ['@babel/polyfill', './src/assets/js/app.js'],
+        detail: ['@babel/polyfill', './src/assets/js/detail.js'],
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -20,6 +21,11 @@ module.exports = {
             template: './src/templates/index.html',
             chunks: ['app'],
         }),
+        new HtmlWebpackPlugin({
+            filename: 'detail/index.html',
+            template: './src/templates/vysledek.html',
+            chunks: ['detail'],
+        }),
         new MiniCssExtractPlugin({
             filename: 'assets/css/[name].css',
         }),
@@ -29,13 +35,9 @@ module.exports = {
                 to: 'assets/imgs',
             },
             {
-                from: 'src/api/api.json',
-                to: 'api_v0/api.json',
-            },
-            {
                 from: 'src/index.php',
-                to: 'index.php'
-            }
+                to: 'index.php',
+            },
         ]),
     ],
     module: {

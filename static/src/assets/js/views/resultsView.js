@@ -20,7 +20,7 @@ export const render = records => {
                         <p class="text text--medium ml-1">${formatDate(record.published_datetime)}</p>
                     </div>
                 </div>
-                <div class="result-category">Dopravní značení</div>
+                <div class="result-category">${record.category}</div>
                 <a href="#" class="result__show">Zobrazit výsledek
                     <img src="assets/imgs/res-rec.svg" alt="">
                 </a>

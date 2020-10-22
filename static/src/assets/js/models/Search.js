@@ -27,8 +27,8 @@ export default class Search {
         query.push('orderby=' + activeSorter.sortBy);
         query.push('dir=' + activeSorter.sortOrder);
 
-        // query.push('limit=' + limit);
-        // query.push('offset=' + offset*limit);
+        query.push('limit=' + limit);
+        query.push('offset=' + offset*limit);
 
         let resp;
 
