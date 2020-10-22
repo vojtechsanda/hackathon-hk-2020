@@ -4,6 +4,12 @@ import { elements } from './base';
 export const renderCategoriesSelectOptions = categories => {
     let categoriesMarkup = '';
 
+    Array.from(elements.searchCategorySelect.children).forEach(child => {
+        if (child.value !== '') {
+            child.parentElement.removeChild(child)
+        }
+    });
+
     categories.forEach(category => {
         const optionMarkup = `
             <option value="${category.id}">${category.name}</option>
@@ -16,6 +22,12 @@ export const renderCategoriesSelectOptions = categories => {
 }
 export const renderSourcesSelectOptions = sources => {
     let sourcesMarkup = '';
+
+    Array.from(elements.searchSourceSelect.children).forEach(child => {
+        if (child.value !== '') {
+            child.parentElement.removeChild(child);
+        }
+    });
 
     sources.forEach((source) => {
         const optionMarkup = `
@@ -42,6 +54,8 @@ export const updateFilter = (filterType, filterOptionId) => {
 export const renderCategoriesSide = categories => {
     let categoriesMarkup = '';
 
+    Array.from(elements.searchCategorySide.children).forEach(child => child.parentElement.removeChild(child));
+
     categories.forEach((category) => {
         const optionMarkup = `
             <li class="filter-item-list__item" title="${category.name}" data-option-id="${category.id}">${cutTxt(category.name, 20)} <span>${category.count}</span></li>
@@ -54,6 +68,8 @@ export const renderCategoriesSide = categories => {
 };
 export const renderSourcesSide = sources => {
     let sourcesMarkup = '';
+
+    Array.from(elements.searchSourcesSide.children).forEach(child => child.parentElement.removeChild(child));
 
     sources.forEach((source) => {
         const optionMarkup = `

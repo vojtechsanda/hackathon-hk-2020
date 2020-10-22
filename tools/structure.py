@@ -4,10 +4,12 @@ from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
+
 class Region(Base):
     __tablename__ = "region"
     id = Column(Integer, primary_key=True, unique=True)
     name = Column(String(255))
+
 
 class Source(Base):
     __tablename__ = "source"
@@ -15,11 +17,13 @@ class Source(Base):
     region_id = Column(Integer, ForeignKey('region.id'))
     name = Column(String(255))
 
+
 class Category(Base):
     __tablename__ = "category"
     id = Column(Integer, primary_key=True, unique=True)
     region_id = Column(Integer, ForeignKey('region.id'))
     name = Column(String(255))
+
 
 class Message(Base):
     __tablename__ = "message"
@@ -32,6 +36,7 @@ class Message(Base):
     published_datetime = Column(DateTime)
     expired_datetime = Column(DateTime)
     children = relationship('Instance')
+
 
 class Instance(Base):
     __tablename__ = "instance"

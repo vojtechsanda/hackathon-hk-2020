@@ -70,8 +70,8 @@ import Axios from 'axios';
 
                 if (instances !== null & instances.length > 0) {
                     instances.forEach((instance, i) => {
-                        if (instance.title && instance.attachment_url && instance.attachment_filename) {
-                            const ext = instance.attachment_filename.split(".").pop().toUpperCase();
+                        if (instance.attachment_url) {
+                            const ext = instance.attachment_url.split(".").pop().toUpperCase();
 
                             detailsMarkup += `
                                 <div class="row">

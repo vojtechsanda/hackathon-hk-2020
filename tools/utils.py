@@ -1,6 +1,7 @@
 import requests
 from tqdm import tqdm
 
+
 def download_from_url(url, dst, req=None):
     if req is None:
         req = requests.get(url, stream=True)

@@ -162,10 +162,17 @@ class Desk {
         this.state.currentRegion = regionId;
     }
 
-    renderRegionsSelect(currentRegion) {
-        this.state.regions.forEach(region => {
-            const optionMarkup = `<option value="${region.id}">${region.name}</option>`;
-        });
+    async updateRegion() {
+        const currentRegion = this.state.currentRegion;
+        
+        const sorters = resultsView.getSorters();
+        const searchedRecordsObj = await this.controllers.search.getSearchedRecords(currentRegion, sorters);
+        this.state.searchedRecords = searchedRecordsObj.messages;
+
+        this.controllers.results.updateRecords(searchedRecordsObj);
+
+        await this.getAllData(currentRegion);
+        this.controllers.search.render(this.state.categories, this.state.sources);
     }
 
     setupEvents() {
@@ -224,7 +231,8 @@ class Desk {
         });
         elements.regionSelect.addEventListener('change', e => {
             const newRegionId = e.target.value;
-            console.log(newRegionId);
+            this.state.currentRegion = newRegionId;
+            this.updateRegion();
         })
     }
     initControllers() {
