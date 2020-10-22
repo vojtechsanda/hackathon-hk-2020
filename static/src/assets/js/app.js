@@ -17,10 +17,10 @@ import * as resultsView from './views/resultsView';
  */
 
 class SearchController {
-    constructor(records) {
+    constructor() {
         this.state = {
-            records: records,
-            search: new Search(records),
+            search: new Search,
+            offset: 0
         };
     }
     render(categories, sources) {
@@ -42,10 +42,14 @@ class SearchController {
             searchedTxt,
             selectedCategory,
             selectedSource,
-            sorters
+            sorters,
+            this.state.offset
         );
 
         return searchedRecordsObj;
+    }
+    async searchAnother() {
+
     }
     init(categories, sources) {
         this.render(categories, sources);
@@ -57,19 +61,20 @@ class SearchController {
  */
 
 class ResultsController {
-    constructor(recordsObj) {
+    constructor() {
         this.state = {
-            recordsObj: recordsObj,
+
         };
     }
     updateRecords(recordsObj) {
+        console.log(recordsObj);
         this.state.recordsObj = recordsObj;
         this.state.recordsObj.messages = Array.from(this.state.recordsObj.messages);
-        this.render();
+        this.render(recordsObj);
     }
-    render() {
-        resultsView.render(this.state.recordsObj.messages);
-        resultsView.updateResultsCount(this.state.recordsObj.count);
+    render(recordsObj) {
+        resultsView.render(recordsObj.messages);
+        resultsView.updateResultsCount(recordsObj.count);
     }
 }
 
@@ -80,20 +85,6 @@ class Desk {
     constructor() {
         this.state = {};
         this.controllers = {};
-    }
-    async fetchAllRecords(currentRegion) {
-        let resp;
-
-        try {
-            resp = await Axios('/api/search/?limit=10&offset=0&orderby=published_datetime&dir=desc&region=' + currentRegion);
-        } catch {
-            console.error('Nebylo možné načíst data');
-            return false;
-        }
-
-        const recordsObj = resp.data;
-
-        return recordsObj;
     }
     async fetchAllCategories(currentRegion) {
         let resp;
@@ -141,9 +132,6 @@ class Desk {
         const regions = await this.fetchRegions();
         if (regions === false) return;
 
-        const recordsObj = await this.fetchAllRecords(currentRegion);
-        if (recordsObj === false) return;
-
         const categories = await this.fetchAllCategories(currentRegion);
         if (categories === false) return;
 
@@ -151,7 +139,6 @@ class Desk {
         if (sources === false) return;
 
         this.state.regions = regions;
-        this.state.recordsObj = recordsObj;
         this.state.categories = categories;
         this.state.sources = sources;
 
@@ -236,11 +223,10 @@ class Desk {
         })
     }
     initControllers() {
-        this.controllers.search = new SearchController(this.state.recordsObj);
+        this.controllers.search = new SearchController;
         this.controllers.search.init(this.state.categories, this.state.sources);
 
-        this.controllers.results = new ResultsController(this.state.recordsObj);
-        this.controllers.results.render();
+        this.controllers.results = new ResultsController;
     }
     async init() {
         this.setRegion(1);
@@ -252,8 +238,16 @@ class Desk {
             alert('Nějaký zdroj se nenačtl');
             return;
         }
-
+        
         this.initControllers();
+
+        const sorters = resultsView.getSorters();
+        const searchedRecordsObj = await this.controllers.search.getSearchedRecords(this.state.currentRegion, sorters);
+
+        this.state.recordsObj = searchedRecordsObj;
+
+        this.controllers.results.updateRecords(searchedRecordsObj);
+
         renderRegionsSelect(this.state.regions, this.state.currentRegion);
         this.setupEvents();
     }

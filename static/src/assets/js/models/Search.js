@@ -1,11 +1,6 @@
 import Axios from 'axios';
 
 export default class Search {
-    constructor(records) {
-        this.state = {
-            records: records,
-        };
-    }
     async search(currentRegion, searchedTxt, selectedCategory, selectedSource, sorters, offset = 0) {
         const limit = 10;
         
@@ -36,7 +31,7 @@ export default class Search {
             resp = await Axios(`/api/search/?${query.join('&')}`);
         } catch {
             alert('Nebylo možné vyhledat');
-            return this.state.records;
+            return [];
         }
 
         const searchedRecordsObj = resp.data;
