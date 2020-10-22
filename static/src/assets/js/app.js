@@ -227,6 +227,7 @@ class Desk {
         elements.regionSelect.addEventListener('change', e => {
             const newRegionId = e.target.value;
             this.state.currentRegion = newRegionId;
+            searchView.resetFilters();
             this.updateRegion();
         });
         window.addEventListener('scroll', async e => {
