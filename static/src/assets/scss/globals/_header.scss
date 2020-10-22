@@ -131,6 +131,11 @@
             display: flex;
             justify-content: space-between;
 
+
+            @include size(1050) {
+                text-align: center;
+            }
+
             .area-switcher {
 
                 position: relative;
@@ -161,8 +166,10 @@
                     outline: none;
                     line-height: 44px;
 
+
                     @include size(500) {
                         width: 100%;
+                        font-size: 2.2rem;
                     }
 
                 }
@@ -173,6 +180,10 @@
                     top: 55%;
                     width: 1.5rem;
                     transform: translateY(-50%);
+
+                    @include size(500) {
+                        width: 1.3rem;
+                    }
 
 
                 }
@@ -250,7 +261,7 @@
                 }
 
                 @include size(1050) {
-                    padding-left: 2rem;
+                    padding-left: 4rem;
 
                 }
 
@@ -288,6 +299,7 @@
 
                 @include size(900) {
                     width: 100%;
+                    word-break: break-all;
                 }
             }
         }
@@ -364,7 +376,6 @@
                 padding-left: 2rem;
 
             }
-
 
             &__drop {
                 position: absolute;
