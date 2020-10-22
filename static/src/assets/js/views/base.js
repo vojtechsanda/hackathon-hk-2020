@@ -29,3 +29,7 @@ export const renderRegionsSelect = (regions, selectedRegionId) => {
 
     elements.regionSelect.insertAdjacentHTML('beforeend', markup);
 }
+
+export const getCurrentViewRegion = () => {
+    return elements.regionSelect.value;
+}
