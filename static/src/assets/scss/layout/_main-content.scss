@@ -160,13 +160,13 @@
                 font-size: 1.4rem;
                 cursor: pointer;
 
-                &[data-sort-opacity="none"] {
+                &[data-opacity="none"] {
                     img {
                         opacity: .3;
                     }
                 }
 
-                &[data-sort-opacity="top"] {
+                &[data-opacity="top"] {
                     img {
                         &:nth-child(2) {
                             opacity: .3;
@@ -174,7 +174,7 @@
                     }
                 }
 
-                &[data-sort-opacity="bottom"] {
+                &[data-opacity="bottom"] {
                     img {
                         &:nth-child(1) {
                             opacity: .3;
