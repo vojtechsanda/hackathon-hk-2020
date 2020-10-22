@@ -22,6 +22,7 @@ $app->route(
   function ($app) {
     if (!isset($_GET['id'])) {
       echo 'Error';
+      exit;
     }
 
     $sql = "SELECT message.title,
@@ -45,6 +46,7 @@ $app->route(
 
     if (count($results) == 0) {
       echo 'Error';
+      exit;
     }
 
     $result = $results[0];

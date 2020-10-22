@@ -2,7 +2,7 @@
 <wtd:collection xmlns:wtd="http://www.webtodate.cz/schemas/2.0/SimpleSchema" xmlns:wtdvar="http://www.webtodate.cz/schemas/2.0/VarSchema">
 <wtd:exported>
 	<wtd:date>2020-10-22</wtd:date>
-	<wtd:time>08:10:01</wtd:time>
+	<wtd:time>09:30:01</wtd:time>
 </wtd:exported>
 <wtd:news>
 <wtd:origin id="317947" ids="317947" vid="1"/>
@@ -5416,6 +5416,83 @@
 		<wtd:targetlocation>public</wtd:targetlocation>
 		<wtd:filetype>pdf</wtd:filetype>
 		<wtd:filesize>852915</wtd:filesize>
+					</wtd:attachment>
+</wtd:attachments>
+</wtd:instance>
+</wtd:instances>
+</wtd:news>
+<wtd:news>
+<wtd:origin id="322715" ids="322715" vid="1"/>
+<wtd:status>published</wtd:status>
+<wtd:locked>no</wtd:locked>
+<wtd:newstype>news</wtd:newstype>
+<wtd:title>Výzva k podání návrhu na uzavření kupní smlouvy - poptávkové řízení &quot;Garáž Hořice&quot;</wtd:title>
+<wtd:dynamic_br>yes</wtd:dynamic_br>
+<wtd:source>Odbor organizační a právní</wtd:source>
+<wtd:categories>
+	<wtd:category name="KHKRAJ" locname="Úvodní stránka" >
+		<wtd:category name="Krajský úřad" locname="Krajský úřad" >
+			<wtd:category name="Úřední deska" locname="Úřední deska (vše)" >
+				<wtd:category name="Ostatní" locname="Ostatní" default="yes"/>
+			</wtd:category>
+		</wtd:category>
+	</wtd:category>
+</wtd:categories>
+<wtd:publication>-KHKRAJ</wtd:publication>
+<wtd:language locale="CZ">čeština</wtd:language>
+<wtd:pattern id="-1">publicationrelated</wtd:pattern>
+<wtd:team id="15">Úřední deska</wtd:team>
+<wtd:user id="252">
+	<wtd:firstname>Olga</wtd:firstname>
+	<wtd:lastname>Jiroutová</wtd:lastname>
+</wtd:user>
+<wtd:datenews>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>08:03:55</wtd:time>
+</wtd:datenews>
+<wtd:datepublished>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>00:00:00</wtd:time>
+</wtd:datepublished>
+<wtd:dateexpired>
+	<wtd:date>2020-12-01</wtd:date>
+	<wtd:time>23:59:59</wtd:time>
+</wtd:dateexpired>
+<wtd:url>/cz/krajsky-urad/uredni-deska/ostatni/vyzva-k-podani-navrhu-na-uzavreni-kupni-smlouvy---poptavkove-rizeni-garaz-horice-322715/</wtd:url>
+<wtd:var doctype="enhanced_news">
+<wtdvar:EXPIRACE>01.12.2020</wtdvar:EXPIRACE>
+</wtd:var>
+<wtd:instances>
+<wtd:assetsfolder>assets</wtd:assetsfolder>
+<wtd:urlprefix>http://www.kr-kralovehradecky.cz</wtd:urlprefix>
+<wtd:instance id="316238" assetid="322716" list="Přílohy ke stažení" default="yes">
+<wtd:status>published</wtd:status>
+<wtd:locked>no</wtd:locked>
+<wtd:title>Výzva k podání návrhu na uzavření kupní smlouvy - poptávkové řízení &quot;Garáž Hořice&quot;</wtd:title>
+<wtd:source>Odbor organizační a právní</wtd:source>
+<wtd:categories>
+	<wtd:category name="KHKRAJ" locname="Úvodní stránka" >
+		<wtd:category name="Krajský úřad" locname="Krajský úřad" >
+			<wtd:category name="Úřední deska" locname="Úřední deska (vše)" >
+				<wtd:category name="Ostatní" locname="Ostatní" default="yes"/>
+			</wtd:category>
+		</wtd:category>
+	</wtd:category>
+</wtd:categories>
+<wtd:publication>-KHKRAJ</wtd:publication>
+<wtd:language locale="CZ">čeština</wtd:language>
+<wtd:datenews>
+	<wtd:date>2020-10-22</wtd:date>
+	<wtd:time>08:09:07</wtd:time>
+</wtd:datenews>
+<wtd:url>/scripts/detail.php?id=322716</wtd:url>
+<wtd:attachments>
+	<wtd:attachment id="319868">
+		<wtd:filename>pozemky.pdf</wtd:filename>
+		<wtd:filepath>/krajsky-urad/uredni-deska/ostatni/</wtd:filepath>
+		<wtd:targetlocation>public</wtd:targetlocation>
+		<wtd:filetype>pdf</wtd:filetype>
+		<wtd:filesize>225425</wtd:filesize>
 					</wtd:attachment>
 </wtd:attachments>
 </wtd:instance>
