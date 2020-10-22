@@ -33,7 +33,6 @@ class KralovehradeckyKraj:
     prefix_map = {"wtd": "http://www.webtodate.cz/schemas/2.0/SimpleSchema"}
     news = tree.findall('wtd:news', prefix_map)
 
-    sources = ['Neznámý'];
     # Create dummy source
     null_source = Source()
     null_source.name = 'Neznámý'
@@ -41,7 +40,8 @@ class KralovehradeckyKraj:
     self.db_session.add(null_source)
     self.db_session.commit()
 
-    categories = []
+    categories = dict()
+    sources = dict()
 
     for row in tqdm(iterable=news, total=len(news)):
         message_obj = Message()
@@ -56,15 +56,15 @@ class KralovehradeckyKraj:
             source = source.text.strip()
 
             if (source not in sources):
-                sources.append(source)
                 source_obj = Source()
                 source_obj.name = source
                 source_obj.region_id = self.region_id
                 self.db_session.add(source_obj)
                 self.db_session.commit()
-            source_id = sources.index(source) + 1
+                sources[source] = source_obj.id
+            source_id = sources[source]
         else:
-            source_id = 1
+            source_id = null_source.id
         message_obj.source_id = source_id
 
         # Category
@@ -73,13 +73,13 @@ class KralovehradeckyKraj:
             category = category.attrib['name'].strip()
 
             if (category not in categories):
-                categories.append(category)
                 category_obj = Category()
                 category_obj.name = category
                 category_obj.region_id = self.region_id
                 self.db_session.add(category_obj);
                 self.db_session.commit()
-            category_id = categories.index(category) + 1
+                categories[category] = category_obj.id
+            category_id = categories[category]
         else:
             category_id = None
         message_obj.category_id = category_id
