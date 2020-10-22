@@ -120,6 +120,7 @@
 
 <script>
     const items = [...document.querySelectorAll(".results__filter-item")];
+    items[0].dataset.opacity = "bottom"
 
     items.forEach((el, i) => el.addEventListener("click", el => {
 
