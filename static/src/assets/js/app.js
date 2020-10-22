@@ -170,12 +170,14 @@ class Desk {
         const searchedRecordsObj = await this.controllers.search.getSearchedRecords(currentRegion, sorters);
         this.state.searchedRecords = searchedRecordsObj.messages;
 
+        this.updateUrl();
+
         this.controllers.results.updateRecords(searchedRecordsObj);
+        
 
         await this.getAllData(currentRegion);
         this.controllers.search.render(this.state.categories, this.state.sources);
 
-        this.updateUrl();
     }
 
     updateUrl() {
@@ -207,10 +209,11 @@ class Desk {
             const sorters = resultsView.getSorters();
             const searchedRecordsObj = await this.controllers.search.getSearchedRecords(this.state.currentRegion, sorters);
             this.state.searchedRecords = searchedRecordsObj.messages;
+            
+            this.updateUrl();
 
             this.controllers.results.updateRecords(searchedRecordsObj);
 
-            this.updateUrl();
         });
 
         elements.resultSorters.forEach(sorter => {
