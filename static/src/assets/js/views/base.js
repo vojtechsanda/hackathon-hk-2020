@@ -21,7 +21,7 @@ export const renderRegionsSelect = (regions, selectedRegionId) => {
 
     regions.forEach(region => {
         const optionMarkup = `
-            <option value="${region.id}"${region.id === selectedRegionId ? ' selected' : ''}>${region.name}</option>
+            <option value="${region.id}"${region.id == selectedRegionId ? ' selected' : ''}>${region.name}</option>
         `;
 
         markup += optionMarkup;

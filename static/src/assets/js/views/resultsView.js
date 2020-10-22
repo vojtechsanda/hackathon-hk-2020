@@ -58,6 +58,10 @@ export const handleSorters = changedSorter => {
     }
 }
 
+export const getFifthResult = () => {
+    return Array.from(elements.resultsWrapper.children).slice(-5, -4)[0];
+}
+
 export const updateResultsCount = count => {
     elements.resultsCount.textContent = count;
 }

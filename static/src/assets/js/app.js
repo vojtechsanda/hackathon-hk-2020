@@ -19,20 +19,30 @@ import * as resultsView from './views/resultsView';
 class SearchController {
     constructor() {
         this.state = {
-            search: new Search,
-            offset: 0
+            search: new Search(),
+            offset: 0,
         };
     }
     render(categories, sources) {
-        searchView.renderCategoriesSelectOptions(categories);
+        searchView.renderCategoriesSelectOptions(categories, getHashParam('category'));
         searchView.renderCategoriesSide(categories);
-        searchView.renderSourcesSelectOptions(sources);
+        searchView.renderSourcesSelectOptions(sources, getHashParam('source'));
         searchView.renderSourcesSide(sources);
+
+        const presetTxt = getHashParam('txt');
+        if (presetTxt) {
+            searchView.updateInput(presetTxt);
+        }
+
     }
     updateFilter(filterType, filterOptionId) {
         searchView.updateFilter(filterType, filterOptionId);
     }
-    async getSearchedRecords(currentRegion, sorters) {
+    async getSearchedRecords(currentRegion, sorters, resetOffset = true) {
+        if (resetOffset) {
+            this.state.offset = 0;
+        }
+
         const searchedTxt = searchView.getSearchedTxt();
         const selectedCategory = searchView.getCategory();
         const selectedSource = searchView.getSource();
@@ -46,10 +56,14 @@ class SearchController {
             this.state.offset
         );
 
+        this.state.offset++;
+
         return searchedRecordsObj;
     }
-    async searchAnother() {
+    async searchNext(currentRegion, sorters) {
+        const newResults = this.getSearchedRecords(currentRegion, sorters, false);
 
+        return newResults;
     }
     init(categories, sources) {
         this.render(categories, sources);
@@ -219,7 +233,26 @@ class Desk {
         elements.regionSelect.addEventListener('change', e => {
             const newRegionId = e.target.value;
             this.state.currentRegion = newRegionId;
+            searchView.resetFilters();
             this.updateRegion();
+        });
+        window.addEventListener('scroll', async e => {
+            const fifthItem = resultsView.getFifthResult();
+            
+            const bottomOffset = (fifthItem.offsetBottom = window.innerHeight - (fifthItem.offsetTop + fifthItem.offsetHeight))*(-1);
+
+            if ((!this.state.lockSearchNext && bottomOffset < window.scrollY)) {
+                this.state.lockSearchNext = true;
+                
+                const sorters = resultsView.getSorters();
+                const nextSearch = await this.controllers.search.searchNext(this.state.currentRegion, sorters);
+    
+                this.state.recordsObj.messages = [...this.state.recordsObj.messages, ...nextSearch.messages];
+    
+                this.controllers.results.updateRecords(this.state.recordsObj);
+
+                this.state.lockSearchNext = false;
+            }
         })
     }
     initControllers() {
@@ -256,3 +289,17 @@ class Desk {
 const desk = new Desk;
 desk.init();
 console.log(desk);
+
+function getHashParam(param) {
+    const query = location.hash.slice(1);
+    const queryParts = query.split('&');
+    const queryPartsSeparated = queryParts.map((part) => part.split('='));
+
+    const wantedPart = queryPartsSeparated.find((part) => part[0] == param);
+
+    if (wantedPart && wantedPart[1]) {
+        return wantedPart[1];
+    }
+
+    return null;
+}
