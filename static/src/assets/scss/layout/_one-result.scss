@@ -9,7 +9,7 @@
         margin-bottom: 15rem;
 
         @include size(1000) {
-            grid-auto-rows: 12rem;
+            grid-auto-rows: minmax(12rem, min-content);
         }
 
         .row {
@@ -23,6 +23,11 @@
 
                 &:nth-child(1) {
                     font-weight: 700;
+                    padding-right: 20rem;
+                }
+
+                &:nth-child(2) {
+                    text-align: end;
                 }
             }
 

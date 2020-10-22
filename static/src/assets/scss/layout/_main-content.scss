@@ -1,7 +1,7 @@
 .main-home {
     margin-top: 10rem;
 
-    @include size(1000) {
+    @include size(1050) {
         margin-top: 5rem;
     }
 }
@@ -20,19 +20,47 @@
 
         width: 31rem;
 
+        @include size(1000) {
+            display: flex;
+            width: 100%;
+        }
+
+        @include size(600) {
+            flex-direction: column;
+        }
+
         &-item {
 
             background-color: $color-light-purple;
             padding: 2.5rem;
             border-radius: 0.2rem;
 
+            @include size(1000) {
+                flex: 1;
+            }
+
+            @include size(400) {
+                padding: 1.5rem;
+            }
+
             &:not(:last-child) {
                 margin-bottom: 3rem;
+
+                @include size(1000) {
+                    margin-bottom: 0;
+                    margin-right: 3rem;
+                }
+
+                @include size(600) {
+                    margin-bottom: 3rem;
+                    margin-right: 0rem;
+                }
             }
 
             &-list {
 
                 list-style: none;
+
 
                 &__item {
 
@@ -71,12 +99,24 @@
 
     .results {
         width: calc(100% - 34.5rem);
+        margin-left: 3.5rem;
+
+        @include size(1000) {
+            margin-left: 0;
+            width: 100%;
+            margin-top: 3rem;
+        }
 
         &-header {
 
             display: flex;
             align-items: center;
             justify-content: space-between;
+
+            @include size(600) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
         }
 
@@ -85,9 +125,30 @@
             display: flex;
             align-items: flex-end;
 
+            @include size(600) {
+                margin-top: 3rem;
+                align-self: flex-end;
+            }
+
+
+            @include size(360) {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .text {
+                @include size(360) {
+                    width: 100%;
+                    margin-bottom: 2rem;
+                }
+            }
+
             div {
+
+
                 &:not(:last-child) {
                     margin-right: 2rem;
+
                 }
             }
 
@@ -127,6 +188,16 @@
                 border: 0.1rem solid rgba($color-light-text, 0.2);
                 padding: 2.5rem;
                 position: relative;
+
+                @include size(500) {
+                    height: 25rem;
+                }
+
+                @include size(400) {
+                    height: 28rem;
+                    padding: 1.5rem;
+
+                }
 
                 &:not(:last-child) {
                     margin-bottom: 3rem;
