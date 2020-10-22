@@ -24,10 +24,16 @@ class SearchController {
         };
     }
     render(categories, sources) {
-        searchView.renderCategoriesSelectOptions(categories);
+        searchView.renderCategoriesSelectOptions(categories, getHashParam('category'));
         searchView.renderCategoriesSide(categories);
-        searchView.renderSourcesSelectOptions(sources);
+        searchView.renderSourcesSelectOptions(sources, getHashParam('source'));
         searchView.renderSourcesSide(sources);
+
+        const presetTxt = getHashParam('txt');
+        if (presetTxt) {
+            searchView.updateInput(presetTxt);
+        }
+
     }
     updateFilter(filterType, filterOptionId) {
         searchView.updateFilter(filterType, filterOptionId);
@@ -247,7 +253,6 @@ class Desk {
 
                 this.state.lockSearchNext = false;
             }
-            
         })
     }
     initControllers() {
@@ -284,3 +289,17 @@ class Desk {
 const desk = new Desk;
 desk.init();
 console.log(desk);
+
+function getHashParam(param) {
+    const query = location.hash.slice(1);
+    const queryParts = query.split('&');
+    const queryPartsSeparated = queryParts.map((part) => part.split('='));
+
+    const wantedPart = queryPartsSeparated.find((part) => part[0] == param);
+
+    if (wantedPart && wantedPart[1]) {
+        return wantedPart[1];
+    }
+
+    return null;
+}

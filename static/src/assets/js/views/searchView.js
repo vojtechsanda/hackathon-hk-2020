@@ -1,7 +1,7 @@
 import { elements } from './base';
 
 // TODO: Should by DRY
-export const renderCategoriesSelectOptions = categories => {
+export const renderCategoriesSelectOptions = (categories, selectId) => {
     let categoriesMarkup = '';
 
     Array.from(elements.searchCategorySelect.children).forEach(child => {
@@ -12,7 +12,7 @@ export const renderCategoriesSelectOptions = categories => {
 
     categories.forEach(category => {
         const optionMarkup = `
-            <option value="${category.id}">${category.name}</option>
+            <option value="${category.id}"${category.id == selectId ? ' selected' : ''}>${category.name}</option>
         `;
         
         categoriesMarkup += optionMarkup;
@@ -20,7 +20,7 @@ export const renderCategoriesSelectOptions = categories => {
 
     elements.searchCategorySelect.insertAdjacentHTML('beforeend', categoriesMarkup);
 }
-export const renderSourcesSelectOptions = sources => {
+export const renderSourcesSelectOptions = (sources, selectId) => {
     let sourcesMarkup = '';
 
     Array.from(elements.searchSourceSelect.children).forEach(child => {
@@ -31,17 +31,19 @@ export const renderSourcesSelectOptions = sources => {
 
     sources.forEach((source) => {
         const optionMarkup = `
-        <option value="${source.id}">${source.name}</option>
+        <option value="${source.id}"${source.id == selectId ? ' selected' : ''}>${source.name}</option>
     `;
 
         sourcesMarkup += optionMarkup;
     });
 
-    elements.searchSourceSelect.insertAdjacentHTML(
-        'beforeend',
-        sourcesMarkup
-    );
-}
+    elements.searchSourceSelect.insertAdjacentHTML('beforeend', sourcesMarkup);
+};
+
+export const updateInput = (txt) => {
+    elements.searchInput.value = txt;
+};
+
 export const resetFilters = () => {
     elements.searchInput.value = '';
     elements.searchCategorySelect.value = '';
