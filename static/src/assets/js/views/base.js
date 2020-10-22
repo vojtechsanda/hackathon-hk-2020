@@ -11,4 +11,21 @@ export const elements = {
     detailTitle: document.querySelector('.js-detail-title'),
     detailCategory: document.querySelector('.js-detail-category'),
     detailDetailsTable: document.querySelector('.js-detail-details-table'),
+    regionSelect: document.querySelector('.js-region-select'),
 };
+
+export const renderRegionsSelect = (regions, selectedRegion) => {
+    let markup = '';
+
+    Array.from(elements.regionSelect.children).forEach(child => child.parentElement.removeChild(child));
+
+    regions.forEach(region => {
+        const optionMarkup = `
+            <option value="${region.id}">${region.name}</option>
+        `;
+
+        markup += optionMarkup;
+    });
+
+    elements.regionSelect.insertAdjacentHTML('beforeend', markup);
+}

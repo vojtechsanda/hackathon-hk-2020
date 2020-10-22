@@ -2,7 +2,7 @@ import '../scss/app.scss'
 
 import Axios from 'axios'
 
-import {elements} from './views/base';
+import { elements, renderRegionsSelect } from './views/base';
 
 // Search component
 import * as searchView from './views/searchView';
@@ -162,6 +162,12 @@ class Desk {
         this.state.currentRegion = regionId;
     }
 
+    renderRegionsSelect(currentRegion) {
+        this.state.regions.forEach(region => {
+            const optionMarkup = `<option value="${region.id}">${region.name}</option>`;
+        });
+    }
+
     setupEvents() {
         elements.searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -216,6 +222,10 @@ class Desk {
                 this.controllers.results.updateRecords(searchedRecordsObj);
             }
         });
+        elements.regionSelect.addEventListener('change', e => {
+            const newRegionId = e.target.value;
+            console.log(newRegionId);
+        })
     }
     initControllers() {
         this.controllers.search = new SearchController(this.state.recordsObj);
@@ -236,6 +246,7 @@ class Desk {
         }
 
         this.initControllers();
+        renderRegionsSelect(this.state.regions, this.state.currentRegion);
         this.setupEvents();
     }
 }
