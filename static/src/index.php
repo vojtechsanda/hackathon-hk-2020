@@ -18,40 +18,46 @@ $app->route(
 );
 
 $app->route(
-  'GET /api/all',
-  function($app) {
-    $messages = $app->get('DB')->exec(
-      "SELECT
-        SQL_CALC_FOUND_ROWS
-        message.id,
-        message.title,
-        message.source_id,
-        message.category_id,
-        message.body,
-        1000 * UNIX_TIMESTAMP(message.published_datetime) as published_datetime,
-        1000 * UNIX_TIMESTAMP(message.expired_datetime) as expired_datetime,
-        DATE_FORMAT(message.published_datetime, '%e.%c.%Y') as published_datetime_txt,
-        DATE_FORMAT(message.expired_datetime, '%e.%c.%Y') as expired_datetime_txt,
-        source.name as source,
-        category.name as category
-       FROM message
-       INNER JOIN source
-       ON source.id = message.source_id
-       INNER JOIN category
-       ON category.id = message.category_id"
-    );
-
-    foreach ($messages as $key=>$message) {
-      $messages[$key]['instances'] = $app->GET('DB')->exec(
-        "SELECT id, title, attachment_url, attachment_filename
-        FROM instance
-        WHERE message_id = :message_id",
-        [':message_id' => $message['id']]
-      );
+  'GET /api/message',
+  function ($app) {
+    if (!isset($_GET['id'])) {
+      echo 'Error';
     }
 
+    $sql = "SELECT message.title,
+            message.source_id,
+            message.category_id,
+            message.body,
+            1000 * UNIX_TIMESTAMP(message.published_datetime) as published_datetime,
+            1000 * UNIX_TIMESTAMP(message.expired_datetime) as expired_datetime,
+            DATE_FORMAT(message.published_datetime, '%e.%c.%Y') as published_datetime_txt,
+            DATE_FORMAT(message.expired_datetime, '%e.%c.%Y') as expired_datetime_txt,
+            source.name as source,
+            category.name as category
+            FROM message
+            LEFT JOIN source
+            ON source.id = message.source_id
+            LEFT JOIN category
+            ON category.id = message.category_id
+            WHERE message.id = :message_id";
+
+    $results = $app->get('DB')->exec($sql, [':message_id' => $_GET['id']]);
+
+    if (count($results) == 0) {
+      echo 'Error';
+    }
+
+    $result = $results[0];
+
+    $result['instances'] = $app->GET('DB')->exec(
+      "SELECT id, title, attachment_url, attachment_filename
+      FROM instance
+      WHERE message_id = :message_id",
+      [':message_id' => $_GET['id']]
+    );
+
     header('Content-type: application/json');
-    echo json_encode($messages, JSON_NUMERIC_CHECK);
+    echo json_encode($result, JSON_NUMERIC_CHECK);
   }
 );
 
