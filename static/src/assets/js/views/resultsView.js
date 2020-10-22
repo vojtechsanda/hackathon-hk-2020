@@ -21,7 +21,7 @@ export const render = records => {
                     </div>
                 </div>
                 <div class="result-category">${record.category}</div>
-                <a href="#" class="result__show">Zobrazit výsledek
+                <a href="/detail/?id=${record.id}" class="result__show">Zobrazit výsledek
                     <img src="assets/imgs/res-rec.svg" alt="">
                 </a>
             </div>

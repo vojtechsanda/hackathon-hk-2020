@@ -8,4 +8,7 @@ export const elements = {
     resultsWrapper: document.querySelector('.js-results-wrapper'),
     resultsCount: document.querySelector('.js-results-count'),
     resultSorters: Array.from(document.querySelectorAll('.js-results-sort-by')),
+    detailTitle: document.querySelector('.js-detail-title'),
+    detailCategory: document.querySelector('.js-detail-category'),
+    detailDetailsTable: document.querySelector('.js-detail-details-table'),
 };
