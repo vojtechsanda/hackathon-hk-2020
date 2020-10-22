@@ -1,5 +1,6 @@
 from pardubicky_kraj import PardubickyKraj
 from kralovehradecky_kraj import KralovehradeckyKraj
+from moravskoslezky_kraj import MoravskoslezkyKraj
 from structure import Base
 from sqlalchemy_utils import create_database, database_exists
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -22,6 +23,7 @@ if __name__ == "__main__":
   # Run parsers
   KralovehradeckyKraj(DBSession)
   PardubickyKraj(DBSession)
+  MoravskoslezkyKraj(DBSession)
 
   # Custom SQL for fulltext search
   with engine.connect() as con:
