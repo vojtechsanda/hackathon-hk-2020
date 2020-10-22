@@ -176,6 +176,10 @@
                             transform: rotate(180deg);
                         }
 
+                        &[data-sort-opacity="opacity"] {
+                            opacity: .3;
+                        }
+
                     }
                 }
             }
