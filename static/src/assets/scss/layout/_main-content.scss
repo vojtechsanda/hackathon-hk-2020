@@ -160,6 +160,12 @@
                 font-size: 1.4rem;
                 cursor: pointer;
 
+                &[data-sort-opacity="none"] {
+                    img {
+                        opacity: .3;
+                    }
+                }
+
                 &[data-sort-opacity="top"] {
                     img {
                         &:nth-child(2) {
