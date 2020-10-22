@@ -137,13 +137,13 @@
                 padding-left: 1rem;
 
                 @include size(700) {
-                    width: 30rem;
+                    width: 100%;
                     margin: auto;
                     padding-left: 0;
                 }
 
                 @include size(500) {
-                    width: 100%;
+                    padding-left: 0;
                 }
 
 
@@ -256,6 +256,10 @@
                 @include size(700) {
                     flex-direction: column;
 
+                }
+
+                @include size(500) {
+                    padding-left: 0;
                 }
 
 
