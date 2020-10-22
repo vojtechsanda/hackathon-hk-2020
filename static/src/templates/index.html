@@ -89,7 +89,7 @@
                     <div class="results__filter">
                         <p class="text text--medium bold mr-2">Seřadit podle:</p>
                         <div class="results__filter-item js-results-sort-by" data-sort-by="title"
-                             data-current-sort="none" data-sort-opacity="bottom">
+                             data-current-sort="none" data-opacity="none">
                             Názvu
                             <span class="results__filter-item__icons">
                                 <img src="../assets/imgs/arr-down-primary.svg"
@@ -98,7 +98,7 @@
                                      alt="Šipka dolů">
                             </span>
                         </div>
-                        <div class="results__filter-item js-results-sort-by" data-sort-opacity="none"
+                        <div class="results__filter-item js-results-sort-by" data-opacity="none"
                              data-sort-by="published_datetime"
                              data-current-sort="desc">
                             Zveřejnění
@@ -117,6 +117,31 @@
         </div>
     </section>
 </main>
+
+<script>
+    const items = [...document.querySelectorAll(".results__filter-item")];
+
+    items.forEach((el, i) => el.addEventListener("click", el => {
+
+        if (i === 0) {
+            el.target.nextElementSibling.dataset.opacity = "none";
+        } else {
+            el.target.previousElementSibling.dataset.opacity = "none"
+        }
+
+        switch (el.target.dataset.opacity) {
+            case "top":
+                el.target.dataset.opacity = "bottom";
+                break;
+            case "bottom":
+                el.target.dataset.opacity = "top";
+                break;
+            case "none":
+                el.target.dataset.opacity = "bottom";
+                break;
+        }
+    }))
+</script>
 
 </body>
 </html>
