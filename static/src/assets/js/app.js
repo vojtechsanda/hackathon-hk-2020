@@ -2,7 +2,7 @@ import '../scss/app.scss'
 
 import Axios from 'axios'
 
-import { elements, renderRegionsSelect } from './views/base';
+import { elements, renderRegionsSelect, getCurrentViewRegion } from './views/base';
 
 // Search component
 import * as searchView from './views/searchView';
@@ -174,6 +174,30 @@ class Desk {
 
         await this.getAllData(currentRegion);
         this.controllers.search.render(this.state.categories, this.state.sources);
+
+        this.updateUrl();
+    }
+
+    updateUrl() {
+        const region = getCurrentViewRegion();
+        
+        const searchedTxt = searchView.getSearchedTxt();
+        const searchedCategory = searchView.getCategory();
+        const searchedSource = searchView.getSource();
+
+        let hash = '#region=' + region;
+
+        if (searchedTxt) {
+            hash += '&txt=' + searchedTxt;
+        }
+        if (searchedCategory) {
+            hash += '&category=' + searchedCategory;
+        }
+        if (searchedSource) {
+            hash += '&source=' + searchedSource;
+        }
+
+        location.hash = hash;
     }
 
     setupEvents() {
@@ -185,6 +209,8 @@ class Desk {
             this.state.searchedRecords = searchedRecordsObj.messages;
 
             this.controllers.results.updateRecords(searchedRecordsObj);
+
+            this.updateUrl();
         });
 
         elements.resultSorters.forEach(sorter => {
